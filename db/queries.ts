@@ -3,6 +3,13 @@ import { cache } from "react";
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
+import {
+  findFirstLegacyIncompleteLesson,
+  getLegacyLessonPercentage,
+  isLegacyChallengeCompleted,
+  isLegacyLessonCompleted,
+} from "@/lib/legacy-progress";
+
 import db from "./drizzle";
 import {
   challengeProgress,
@@ -64,16 +71,7 @@ export const getUnits = cache(async () => {
 
   const normalizedData = data.map((unit) => {
     const lessonsWithCompletedStatus = unit.lessons.map((lesson) => {
-      if (lesson.challenges.length === 0)
-        return { ...lesson, completed: false };
-
-      const allCompletedChallenges = lesson.challenges.every((challenge) => {
-        return (
-          challenge.challengeProgress &&
-          challenge.challengeProgress.length > 0 &&
-          challenge.challengeProgress.every((progress) => progress.completed)
-        );
-      });
+      const allCompletedChallenges = isLegacyLessonCompleted(lesson.challenges);
 
       return { ...lesson, completed: allCompletedChallenges };
     });
@@ -128,17 +126,8 @@ export const getCourseProgress = cache(async () => {
     },
   });
 
-  const firstUncompletedLesson = unitsInActiveCourse
-    .flatMap((unit) => unit.lessons)
-    .find((lesson) => {
-      return lesson.challenges.some((challenge) => {
-        return (
-          !challenge.challengeProgress ||
-          challenge.challengeProgress.length === 0 ||
-          challenge.challengeProgress.some((progress) => !progress.completed)
-        );
-      });
-    });
+  const firstUncompletedLesson =
+    findFirstLegacyIncompleteLesson(unitsInActiveCourse);
 
   return {
     activeLesson: firstUncompletedLesson,
@@ -174,10 +163,7 @@ export const getLesson = cache(async (id?: number) => {
   if (!data || !data.challenges) return null;
 
   const normalizedChallenges = data.challenges.map((challenge) => {
-    const completed =
-      challenge.challengeProgress &&
-      challenge.challengeProgress.length > 0 &&
-      challenge.challengeProgress.every((progress) => progress.completed);
+    const completed = isLegacyChallengeCompleted(challenge);
 
     return { ...challenge, completed };
   });
@@ -194,12 +180,10 @@ export const getLessonPercentage = cache(async () => {
 
   if (!lesson) return 0;
 
-  const completedChallenges = lesson.challenges.filter(
-    (challenge) => challenge.completed
-  );
-
-  const percentage = Math.round(
-    (completedChallenges.length / lesson.challenges.length) * 100
+  const percentage = getLegacyLessonPercentage(
+    lesson.challenges.map((challenge) => ({
+      challengeProgress: [{ completed: challenge.completed }],
+    }))
   );
 
   return percentage;

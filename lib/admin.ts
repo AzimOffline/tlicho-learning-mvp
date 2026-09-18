@@ -1,14 +1,11 @@
 import { auth } from "@clerk/nextjs/server";
 
+import { isAdminUser } from "./admin-access";
+import { getAdminEnvironment } from "./env";
+
 export const getIsAdmin = async () => {
   const { userId } = await auth();
+  const { adminIds } = getAdminEnvironment();
 
-  if (!userId) return false;
-
-  const adminIds =
-    process.env.CLERK_ADMIN_IDS?.split(",")
-      .map((id) => id.trim())
-      .filter(Boolean) ?? [];
-
-  return adminIds.includes(userId);
+  return isAdminUser(userId, adminIds);
 };

@@ -5,20 +5,19 @@ import Stripe from "stripe";
 
 import db from "@/db/drizzle";
 import { userSubscription } from "@/db/schema";
+import { getStripeEnvironment } from "@/lib/env";
 import { stripe } from "@/lib/stripe";
+import { classifyLegacyStripeWebhookEvent } from "@/lib/stripe-events";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const signature = (await headers()).get("Stripe-Signature") as string;
+  const { webhookSecret } = getStripeEnvironment();
 
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET
-    );
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (error: unknown) {
     return new NextResponse(`Webhook error ${JSON.stringify(error)}`, {
       status: 400,
@@ -26,9 +25,10 @@ export async function POST(req: NextRequest) {
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
+  const action = classifyLegacyStripeWebhookEvent(event.type);
 
   // user subscription completed
-  if (event.type === "checkout.session.completed") {
+  if (action === "create-subscription") {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string
     );
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
   }
 
   // renew user subscription
-  if (event.type === "invoice.payment_succeeded") {
+  if (action === "renew-subscription") {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string
     );

@@ -1,5 +1,9 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
+import { getClerkEnvironment } from "@/lib/env";
+
+getClerkEnvironment();
+
 export default clerkMiddleware();
 
 export const config = {

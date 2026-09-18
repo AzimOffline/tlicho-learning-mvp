@@ -8,9 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "typecheck": "tsc --noEmit --incremental false",
+    "test": "tsx --test tests/*.test.ts",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
     "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:prod": "tsx ./scripts/prod.ts"
   },
