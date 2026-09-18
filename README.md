@@ -82,8 +82,18 @@ duolingo-clone/
     |-- drizzle.ts
     |-- queries.ts
     |-- schema.ts
+  |- docs/
+    |-- architecture/
+    |-- runbooks/
+  |- drizzle/
+    |-- meta/
+    |-- 0000_baseline.sql
   |- lib/
+    |-- admin-access.ts
     |-- admin.ts
+    |-- env.ts
+    |-- legacy-progress.ts
+    |-- stripe-events.ts
     |-- stripe.ts
     |-- utils.ts
   |- public/
@@ -93,6 +103,11 @@ duolingo-clone/
     |-- use-exit-modal.ts
     |-- use-hearts-modal.ts
     |-- use-practice-modal.ts
+  |- tests/
+    |-- admin-access.test.ts
+    |-- architecture-boundaries.test.ts
+    |-- env.test.ts
+    |-- legacy-progress.test.ts
   |- .env.example
   |- .env/.env.local
   |- .gitignore
