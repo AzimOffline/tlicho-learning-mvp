@@ -2,27 +2,26 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   agentRules: false,
-  images: { unoptimized: true },
   devIndicators: false,
   headers: async () => [
     {
-      source: "/api/(.*)",
+      source: "/(.*)",
       headers: [
         {
-          key: "Access-Control-Allow-Origin",
-          value: "*",
+          key: "X-Content-Type-Options",
+          value: "nosniff",
         },
         {
-          key: "Access-Control-Allow-Methods",
-          value: "GET, POST, PUT, DELETE, OPTIONS",
+          key: "Referrer-Policy",
+          value: "strict-origin-when-cross-origin",
         },
         {
-          key: "Access-Control-Allow-Headers",
-          value: "Content-Type, Authorization",
+          key: "Permissions-Policy",
+          value: "camera=(), microphone=(), geolocation=()",
         },
         {
-          key: "Content-Range",
-          value: "bytes : 0-9/*",
+          key: "X-Frame-Options",
+          value: "SAMEORIGIN",
         },
       ],
     },

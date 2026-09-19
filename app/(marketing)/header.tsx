@@ -36,7 +36,7 @@ export const Header = () => {
               className="h-14 rounded-2xl px-6 text-base"
               asChild
             >
-              <Link href="/demo">Open demo</Link>
+              <Link href="/demo">Start learning</Link>
             </Button>
           ) : (
             <>

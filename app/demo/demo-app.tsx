@@ -33,6 +33,13 @@ import {
   type ActivityCompanion,
 } from "@/lib/activity-companions";
 import { createFsrsCard, reviewFsrsCard, type FsrsCard } from "@/lib/fsrs";
+import {
+  DEMO_PROGRESS_STORAGE_KEY,
+  initialDemoProgressState,
+  parseStoredDemoProgress,
+  type DemoProgressState,
+  type StoredCard,
+} from "@/lib/demo-progress";
 import { applyPracticeReviewPolicy } from "@/lib/practice-review-policy";
 import { applyPracticeHeartReward } from "@/lib/practice-rewards";
 import { getStreakUpdate } from "@/lib/streak";
@@ -54,23 +61,6 @@ export type DemoVocabularyItem = {
   exampleEnglish: string | null;
 };
 
-type StoredCard = Omit<FsrsCard, "due" | "lastReview"> & {
-  due: string;
-  lastReview?: string;
-};
-
-type DemoState = {
-  version: 2;
-  xp: number;
-  hearts: number;
-  streak: number;
-  lastActivityAt?: string;
-  completedLessons: string[];
-  encountered: string[];
-  cards: Record<string, StoredCard>;
-  reviewsCompleted: number;
-};
-
 type Tab = "learn" | "practice" | "progress" | "profile";
 
 type Activity = {
@@ -78,6 +68,7 @@ type Activity = {
   instruction: string;
   focusText: string | null;
   focusLanguage: "Tłı̨chǫ" | "English" | "Audio";
+  answerLanguage: "Tłı̨chǫ" | "English";
   companion: ActivityCompanion;
   promptAudioSrc: string | null;
   revealAudioAfterAnswer: boolean;
@@ -103,19 +94,6 @@ type Unit = {
   lessons: Lesson[];
 };
 
-const STORAGE_KEY = "tlicho-learning-demo-v2";
-
-const initialState: DemoState = {
-  version: 2,
-  xp: 0,
-  hearts: MAX_HEARTS,
-  streak: 0,
-  completedLessons: [],
-  encountered: [],
-  cards: {},
-  reviewsCompleted: 0,
-};
-
 const serializeCard = (card: FsrsCard): StoredCard => ({
   ...card,
   due: card.due.toISOString(),
@@ -128,7 +106,7 @@ const deserializeCard = (card: StoredCard): FsrsCard => ({
   lastReview: card.lastReview ? new Date(card.lastReview) : undefined,
 });
 
-const updateStreak = (state: DemoState, activityAt: Date) => {
+const updateStreak = (state: DemoProgressState, activityAt: Date) => {
   const update = getStreakUpdate(
     state.streak,
     state.lastActivityAt ? new Date(state.lastActivityAt) : null,
@@ -223,6 +201,7 @@ const buildActivity = (
     instruction,
     focusText,
     focusLanguage,
+    answerLanguage: answerInEnglish ? "English" : "Tłı̨chǫ",
     companion: getActivityCompanion(`${item.id}:${sequence}`),
     promptAudioSrc: item.audioSrc,
     revealAudioAfterAnswer: mode === 1,
@@ -258,7 +237,7 @@ const AnswerGrid = ({
           disabled={!!result}
           onClick={() => onSelect(option.id)}
           className={cn(
-            "flex min-h-16 items-center justify-between rounded-2xl border-2 border-b-4 p-3 text-left text-sm font-bold text-neutral-700 transition hover:bg-neutral-50 active:border-b-2 sm:min-h-20 sm:p-4 sm:text-base",
+            "flex min-h-16 items-center justify-between rounded-2xl border-2 border-b-4 p-3 text-left text-sm font-bold text-neutral-700 transition hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-200 active:border-b-2 sm:min-h-20 sm:p-4 sm:text-base",
             selected && "border-sky-400 bg-sky-50 text-sky-700",
             result &&
               selected &&
@@ -274,7 +253,9 @@ const AnswerGrid = ({
               "border-emerald-500 bg-emerald-50 text-emerald-700"
           )}
         >
-          <span>{option.text}</span>
+          <span lang={activity.answerLanguage === "Tłı̨chǫ" ? "dgr" : "en"}>
+            {option.text}
+          </span>
           <span className="ml-3 rounded-lg border-2 px-2 py-1 text-xs text-neutral-400">
             {optionIndex + 1}
           </span>
@@ -284,7 +265,7 @@ const AnswerGrid = ({
   </div>
 );
 
-const HeaderGameStats = ({ state }: { state: DemoState }) => {
+const HeaderGameStats = ({ state }: { state: DemoProgressState }) => {
   const level = Math.floor(state.xp / 100) + 1;
   const levelXp = state.xp % 100;
 
@@ -569,7 +550,9 @@ export const DemoApp = ({
   );
   const units = useMemo(() => buildUnits(courseVocabulary), [courseVocabulary]);
   const [ready, setReady] = useState(false);
-  const [state, setState] = useState<DemoState>(initialState);
+  const [state, setState] = useState<DemoProgressState>(
+    initialDemoProgressState
+  );
   const [tab, setTab] = useState<Tab>("learn");
   const [nowMs, setNowMs] = useState(0);
   const [activeLesson, setActiveLesson] = useState<Lesson>();
@@ -591,20 +574,25 @@ export const DemoApp = ({
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem(DEMO_PROGRESS_STORAGE_KEY);
       if (stored) {
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        setState(JSON.parse(stored) as DemoState);
+        setState(parseStoredDemoProgress(stored));
       }
     } catch {
-      localStorage.removeItem(STORAGE_KEY);
+      // Storage can be unavailable in private or restricted browsing contexts.
     }
     setReady(true);
     setNowMs(Date.now());
   }, []);
 
   useEffect(() => {
-    if (ready) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    if (!ready) return;
+    try {
+      localStorage.setItem(DEMO_PROGRESS_STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      // Keep the current session usable when storage is unavailable or full.
+    }
   }, [ready, state]);
 
   const dueCards = Object.values(state.cards)
@@ -681,15 +669,19 @@ export const DemoApp = ({
   };
 
   const resetProgress = () => {
-    if (!window.confirm("Reset all local demo progress on this browser?")) {
+    if (!window.confirm("Reset all learning progress on this browser?")) {
       return;
     }
 
-    localStorage.removeItem(STORAGE_KEY);
-    setState(initialState);
+    try {
+      localStorage.removeItem(DEMO_PROGRESS_STORAGE_KEY);
+    } catch {
+      // In-memory reset still works if browser storage is unavailable.
+    }
+    setState(initialDemoProgressState);
     setPracticeQueue([]);
     openTab("learn");
-    toast.success("Local demo progress reset.");
+    toast.success("Learning progress reset.");
   };
 
   const showReward = (title: string, detail: string) => {
@@ -855,7 +847,7 @@ export const DemoApp = ({
         {incorrectAudio}
         {finishAudio}
         <div className="flex min-h-screen items-center justify-center font-bold text-sky-700">
-          Loading local demo…
+          Loading your learning trail…
         </div>
       </>
     );
@@ -905,7 +897,7 @@ export const DemoApp = ({
               type="button"
               onClick={() => openTab(id)}
               className={cn(
-                "flex h-[52px] items-center gap-4 rounded-xl px-4 font-bold text-neutral-500 hover:bg-slate-100",
+                "flex h-[52px] items-center gap-4 rounded-xl px-4 font-bold text-neutral-500 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-200",
                 tab === id && "bg-sky-100 text-sky-800"
               )}
             >
@@ -939,15 +931,12 @@ export const DemoApp = ({
       >
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2 font-extrabold text-sky-800 lg:hidden"
+          className="flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 font-extrabold text-sky-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-200 sm:justify-start lg:hidden"
         >
           <Image src="/tlicho-mark.svg" alt="" width={34} height={34} />
           <span className="hidden sm:inline">Tłı̨chǫ Learning</span>
         </Link>
         <HeaderGameStats state={state} />
-        <span className="hidden shrink-0 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800 md:inline-flex">
-          Demo
-        </span>
       </header>
 
       <main
@@ -986,7 +975,7 @@ export const DemoApp = ({
             <button
               type="button"
               onClick={() => setActiveLesson(undefined)}
-              className="mb-6 flex items-center gap-2 font-bold text-neutral-500"
+              className="mb-6 flex min-h-11 items-center gap-2 rounded-xl px-2 font-bold text-neutral-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-200"
             >
               <ArrowLeft className="h-5 w-5" /> Back to course
             </button>
@@ -999,11 +988,18 @@ export const DemoApp = ({
                 <Heart className="h-5 w-5 fill-current" /> {state.hearts}
               </span>
             </div>
-            <div className="h-3 overflow-hidden rounded-full bg-neutral-200">
+            <div
+              className="h-3 overflow-hidden rounded-full bg-neutral-200"
+              role="progressbar"
+              aria-label="Lesson progress"
+              aria-valuemin={0}
+              aria-valuemax={activeLesson.items.length}
+              aria-valuenow={quizIndex + 1}
+            >
               <div
                 className="h-full rounded-full bg-sky-500"
                 style={{
-                  width: `${(quizIndex / activeLesson.items.length) * 100}%`,
+                  width: `${((quizIndex + 1) / activeLesson.items.length) * 100}%`,
                 }}
               />
             </div>
@@ -1028,6 +1024,8 @@ export const DemoApp = ({
             </div>
             {result && (
               <div
+                role="status"
+                aria-live="polite"
                 className={cn(
                   "mt-5 flex items-center gap-3 rounded-2xl p-4 font-bold",
                   result === "correct"
@@ -1132,7 +1130,7 @@ export const DemoApp = ({
               <button
                 type="button"
                 onClick={() => openTab("learn")}
-                className="flex items-center gap-1.5 rounded-xl px-1 py-1 hover:text-sky-700"
+                className="flex min-h-11 items-center gap-1.5 rounded-xl px-2 py-1 hover:text-sky-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-200"
               >
                 <ArrowLeft className="h-5 w-5" /> Exit
               </button>
@@ -1163,6 +1161,8 @@ export const DemoApp = ({
             </div>
             {result && (
               <div
+                role="status"
+                aria-live="polite"
                 className={cn(
                   "mt-3 flex items-center gap-3 rounded-2xl p-3 text-sm font-bold sm:mt-5 sm:p-4 sm:text-base",
                   result === "correct"
@@ -1267,7 +1267,7 @@ export const DemoApp = ({
         ) : tab === "progress" ? (
           <section>
             <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-sky-600">
-              Local progress
+              Your progress
             </p>
             <h1 className="mt-2 text-3xl font-extrabold text-neutral-800">
               Progress
@@ -1310,15 +1310,15 @@ export const DemoApp = ({
                 className="mx-auto"
               />
               <h1 className="mt-4 text-3xl font-extrabold text-neutral-800">
-                Local learner
+                Your learning profile
               </h1>
               <p className="mt-2 text-neutral-500">
-                Zero-configuration private demo profile
+                Progress saved on this device
               </p>
             </div>
             <div className="mt-5 rounded-2xl bg-amber-50 p-5 text-amber-900">
-              This mode has no sign-in. Progress and FSRS schedules are stored
-              in your browser’s local storage and are not synced anywhere.
+              No sign-in is required. Progress and review schedules stay in this
+              browser and are not synced to other devices.
             </div>
             <Button
               className="mt-5 w-full"
@@ -1348,7 +1348,7 @@ export const DemoApp = ({
             key={id}
             onClick={() => openTab(id)}
             className={cn(
-              "flex flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-neutral-400 sm:gap-1 sm:text-xs",
+              "flex flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-neutral-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-sky-200 sm:gap-1 sm:text-xs",
               tab === id && "text-sky-800"
             )}
           >
