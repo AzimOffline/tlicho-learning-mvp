@@ -186,15 +186,6 @@ export default function MarketingPage() {
             className="object-cover"
           />
 
-          <div className="absolute left-8 top-8 z-20 max-w-[16rem] text-white sm:left-12 sm:top-14 sm:max-w-sm">
-            <p className="text-xs font-extrabold uppercase tracking-[0.3em] text-sky-100 sm:text-sm">
-              Learn with a guide
-            </p>
-            <h2 className="mt-4 text-3xl font-black leading-[1.08] tracking-[-0.035em] sm:text-4xl lg:text-[2.65rem]">
-              A friendly face along the way.
-            </h2>
-          </div>
-
           <div className="absolute -bottom-14 right-[-4.25rem] z-10 h-[430px] w-[430px] sm:-bottom-20 sm:right-[-4.75rem] sm:h-[590px] sm:w-[590px]">
             <Image
               src="/characters/tactile/moose.png"
@@ -206,9 +197,10 @@ export default function MarketingPage() {
             />
           </div>
 
-          <div className="absolute bottom-8 left-7 z-30 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md sm:bottom-10 sm:left-10 sm:text-base">
-            Small steps. Real progress.
-          </div>
+          <p className="absolute left-8 top-8 z-30 max-w-[12rem] text-3xl font-black leading-[1.02] tracking-[-0.04em] text-white drop-shadow-[0_3px_10px_rgba(3,33,64,0.28)] sm:left-12 sm:top-14 sm:max-w-[16rem] sm:text-5xl">
+            <span className="block text-sky-100">Small steps.</span>
+            <span className="block">Real progress.</span>
+          </p>
         </div>
       </section>
 

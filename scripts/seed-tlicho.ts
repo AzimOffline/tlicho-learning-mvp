@@ -132,9 +132,10 @@ const main = async () => {
     .returning();
 
   const grouped = tlichoUnitDefinitions.map(() => [] as SourceEntry[]);
-  entries.forEach((entry) =>
-    grouped[classifyTlichoUnit(entry.topic)].push(entry)
-  );
+  entries.forEach((entry) => {
+    const unitIndex = classifyTlichoUnit(entry.topic);
+    if (unitIndex !== null) grouped[unitIndex].push(entry);
+  });
 
   let globalIndex = 0;
 

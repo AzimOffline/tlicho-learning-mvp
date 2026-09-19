@@ -33,6 +33,8 @@ import {
   type ActivityCompanion,
 } from "@/lib/activity-companions";
 import { createFsrsCard, reviewFsrsCard, type FsrsCard } from "@/lib/fsrs";
+import { applyPracticeReviewPolicy } from "@/lib/practice-review-policy";
+import { applyPracticeHeartReward } from "@/lib/practice-rewards";
 import { getStreakUpdate } from "@/lib/streak";
 import {
   buildBalancedLessonGroups,
@@ -79,6 +81,7 @@ type Activity = {
   companion: ActivityCompanion;
   promptAudioSrc: string | null;
   revealAudioAfterAnswer: boolean;
+  translationAfterAnswer: string | null;
   options: { id: string; text: string; correct: boolean }[];
 };
 
@@ -140,9 +143,10 @@ const updateStreak = (state: DemoState, activityAt: Date) => {
 
 const buildUnits = (items: DemoVocabularyItem[]): Unit[] => {
   const grouped = tlichoUnitDefinitions.map(() => [] as DemoVocabularyItem[]);
-  items.forEach((item) =>
-    grouped[classifyTlichoUnit(item.category)].push(item)
-  );
+  items.forEach((item) => {
+    const unitIndex = classifyTlichoUnit(item.category);
+    if (unitIndex !== null) grouped[unitIndex].push(item);
+  });
 
   return tlichoUnitDefinitions.flatMap((definition, unitIndex) => {
     const entries = grouped[unitIndex];
@@ -222,6 +226,7 @@ const buildActivity = (
     companion: getActivityCompanion(`${item.id}:${sequence}`),
     promptAudioSrc: item.audioSrc,
     revealAudioAfterAnswer: mode === 1,
+    translationAfterAnswer: mode === 3 ? item.english : null,
     options: choices.map((choice) => ({
       id: choice.id,
       text: answerInEnglish ? choice.english : choice.tlicho,
@@ -234,14 +239,16 @@ const AnswerGrid = ({
   activity,
   selectedId,
   result,
+  revealCorrectOnIncorrect = false,
   onSelect,
 }: {
   activity: Activity;
   selectedId?: string;
   result?: "correct" | "incorrect";
+  revealCorrectOnIncorrect?: boolean;
   onSelect: (id: string) => void;
 }) => (
-  <div className="mt-8 grid gap-3 sm:grid-cols-2">
+  <div className="mt-4 grid grid-cols-2 gap-2.5 sm:mt-8 sm:gap-3">
     {activity.options.map((option, optionIndex) => {
       const selected = option.id === selectedId;
       return (
@@ -251,7 +258,7 @@ const AnswerGrid = ({
           disabled={!!result}
           onClick={() => onSelect(option.id)}
           className={cn(
-            "flex min-h-20 items-center justify-between rounded-2xl border-2 border-b-4 p-4 text-left font-bold text-neutral-700 transition hover:bg-neutral-50 active:border-b-2",
+            "flex min-h-16 items-center justify-between rounded-2xl border-2 border-b-4 p-3 text-left text-sm font-bold text-neutral-700 transition hover:bg-neutral-50 active:border-b-2 sm:min-h-20 sm:p-4 sm:text-base",
             selected && "border-sky-400 bg-sky-50 text-sky-700",
             result &&
               selected &&
@@ -260,7 +267,11 @@ const AnswerGrid = ({
             result &&
               selected &&
               !option.correct &&
-              "border-rose-500 bg-rose-50 text-rose-700"
+              "border-rose-500 bg-rose-50 text-rose-700",
+            result === "incorrect" &&
+              revealCorrectOnIncorrect &&
+              option.correct &&
+              "border-emerald-500 bg-emerald-50 text-emerald-700"
           )}
         >
           <span>{option.text}</span>
@@ -273,38 +284,38 @@ const AnswerGrid = ({
   </div>
 );
 
-const GameStatusBar = ({ state }: { state: DemoState }) => {
+const HeaderGameStats = ({ state }: { state: DemoState }) => {
   const level = Math.floor(state.xp / 100) + 1;
   const levelXp = state.xp % 100;
 
   return (
-    <div className="mb-5 grid grid-cols-2 gap-3 rounded-2xl border-2 bg-white p-3 shadow-sm sm:grid-cols-[auto_minmax(220px,1fr)_auto] sm:items-center sm:p-4">
-      <div className="flex items-center gap-2 rounded-xl bg-orange-50 px-3 py-2 text-orange-600">
+    <div className="flex min-w-0 flex-1 items-center justify-center gap-1.5 sm:gap-3">
+      <div className="flex shrink-0 items-center gap-1.5 rounded-xl bg-orange-50 px-2 py-1.5 text-orange-600 sm:px-3 sm:py-2">
         <Flame
           className={cn(
-            "h-7 w-7 fill-current",
+            "h-5 w-5 fill-current sm:h-6 sm:w-6",
             state.streak > 0 && "animate-streak-flame"
           )}
         />
-        <div>
-          <strong className="block text-lg leading-none">{state.streak}</strong>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-orange-800/70">
+        <div className="leading-none">
+          <strong className="text-sm sm:text-base">{state.streak}</strong>
+          <span className="ml-1 hidden text-[9px] font-extrabold uppercase tracking-wider text-orange-800/70 md:inline">
             Day streak
           </span>
         </div>
       </div>
 
-      <div className="order-3 col-span-2 rounded-xl bg-sky-50 px-3 py-2 sm:order-none sm:col-span-1">
-        <div className="mb-1.5 flex items-center justify-between text-xs font-extrabold text-sky-800">
+      <div className="min-w-0 rounded-xl bg-sky-50 px-2 py-1.5 sm:w-48 sm:px-3 sm:py-2 md:w-64">
+        <div className="flex items-center justify-between text-[10px] font-extrabold text-sky-800 sm:text-xs">
           <span className="flex items-center gap-1.5">
             <Sparkles className="h-4 w-4 fill-sky-400 text-sky-500" /> Level{" "}
             {level}
           </span>
-          <span key={state.xp} className="animate-score-pop">
+          <span key={state.xp} className="animate-score-pop hidden sm:inline">
             {levelXp}/100 XP
           </span>
         </div>
-        <div className="h-3 overflow-hidden rounded-full bg-sky-100">
+        <div className="mt-1 hidden h-2 overflow-hidden rounded-full bg-sky-100 sm:block">
           <div
             className="h-full rounded-full bg-gradient-to-r from-sky-400 to-cyan-400 transition-[width] duration-700 ease-out"
             style={{ width: `${levelXp}%` }}
@@ -312,13 +323,13 @@ const GameStatusBar = ({ state }: { state: DemoState }) => {
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-2 rounded-xl bg-rose-50 px-3 py-2 text-rose-500">
-        <Heart className="animate-heartbeat h-7 w-7 fill-current" />
-        <div>
-          <strong className="block text-lg leading-none">
+      <div className="flex shrink-0 items-center gap-1.5 rounded-xl bg-rose-50 px-2 py-1.5 text-rose-500 sm:px-3 sm:py-2">
+        <Heart className="animate-heartbeat h-5 w-5 fill-current sm:h-6 sm:w-6" />
+        <div className="leading-none">
+          <strong className="text-sm sm:text-base">
             {state.hearts}/{MAX_HEARTS}
           </strong>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-rose-800/60">
+          <span className="ml-1 hidden text-[9px] font-extrabold uppercase tracking-wider text-rose-800/60 md:inline">
             Hearts
           </span>
         </div>
@@ -388,12 +399,14 @@ const LessonPath = ({
   unitIndex,
   completedLessons,
   currentLessonId,
+  heartsDepleted,
   onBegin,
 }: {
   unit: Unit;
   unitIndex: number;
   completedLessons: string[];
   currentLessonId: string | undefined;
+  heartsDepleted: boolean;
   onBegin: (lesson: Lesson) => void;
 }) => {
   const style = unitStyles[unitIndex % unitStyles.length];
@@ -464,7 +477,7 @@ const LessonPath = ({
         <div
           className={cn(
             "absolute z-0 hidden h-28 w-28 items-center justify-center overflow-hidden rounded-[2rem] border border-white bg-gradient-to-br from-sky-100 to-teal-50 shadow-sm sm:flex",
-            unitIndex % 2 ? "left-3" : "right-3"
+            unitIndex % 2 && unitIndex !== 1 ? "left-3" : "right-3"
           )}
           style={{ top: Math.max(76, pathHeight / 2 - 48) }}
         >
@@ -481,7 +494,7 @@ const LessonPath = ({
           const point = points[lessonIndex];
           const complete = completedLessons.includes(lesson.id);
           const current = lesson.id === currentLessonId;
-          const locked = !complete && !current;
+          const locked = heartsDepleted || (!complete && !current);
           const isMilestone = lessonIndex === unit.lessons.length - 1;
           const Icon = complete
             ? Check
@@ -497,7 +510,7 @@ const LessonPath = ({
               className="absolute z-10 flex w-[176px] -translate-x-1/2 flex-col items-center"
               style={{ left: `${point.x}%`, top: point.y - 44 }}
             >
-              {current && (
+              {current && !heartsDepleted && (
                 <span className="absolute -top-10 animate-bounce rounded-xl border-2 border-sky-100 bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-sky-600 shadow-sm">
                   Start
                 </span>
@@ -545,7 +558,16 @@ export const DemoApp = ({
 }: {
   vocabulary: DemoVocabularyItem[];
 }) => {
-  const units = useMemo(() => buildUnits(vocabulary), [vocabulary]);
+  const courseVocabulary = useMemo(
+    () =>
+      vocabulary.filter((item) => classifyTlichoUnit(item.category) !== null),
+    [vocabulary]
+  );
+  const courseVocabularyIds = useMemo(
+    () => new Set(courseVocabulary.map(({ id }) => id)),
+    [courseVocabulary]
+  );
+  const units = useMemo(() => buildUnits(courseVocabulary), [courseVocabulary]);
   const [ready, setReady] = useState(false);
   const [state, setState] = useState<DemoState>(initialState);
   const [tab, setTab] = useState<Tab>("learn");
@@ -555,6 +577,8 @@ export const DemoApp = ({
   const [selectedId, setSelectedId] = useState<string>();
   const [result, setResult] = useState<"correct" | "incorrect">();
   const [practiceQueue, setPracticeQueue] = useState<PracticeQueueItem[]>([]);
+  const [practiceStarted, setPracticeStarted] = useState(false);
+  const [practiceCorrectAnswers, setPracticeCorrectAnswers] = useState(0);
   const [reward, setReward] = useState<{
     title: string;
     detail: string;
@@ -585,36 +609,71 @@ export const DemoApp = ({
 
   const dueCards = Object.values(state.cards)
     .map(deserializeCard)
+    .filter((card) => courseVocabularyIds.has(card.itemId))
     .filter((card) => card.due.getTime() <= nowMs)
     .sort((a, b) => a.due.getTime() - b.due.getTime());
+  const recoveryCards =
+    state.hearts === 0 && dueCards.length === 0
+      ? Object.values(state.cards)
+          .filter((card) => courseVocabularyIds.has(card.itemId))
+          .sort((a, b) => new Date(a.due).getTime() - new Date(b.due).getTime())
+          .slice(0, 5)
+      : [];
+  const reviewsLeftToday =
+    dueCards.length > 0 ? dueCards.length : recoveryCards.length;
   const currentLessonId = units
     .flatMap((unit) => unit.lessons)
     .find((lesson) => !state.completedLessons.includes(lesson.id))?.id;
 
   const openTab = (nextTab: Tab) => {
+    window.scrollTo({ top: 0, behavior: "auto" });
     setActiveLesson(undefined);
     setSelectedId(undefined);
     setResult(undefined);
     setTab(nextTab);
 
     if (nextTab === "practice") {
+      setPracticeStarted(false);
+      setPracticeQueue([]);
       // Captured only when the learner opens Practice, not during render.
       // eslint-disable-next-line react-hooks/purity
-      const currentTime = Date.now();
-      setNowMs(currentTime);
-      setPracticeQueue(
-        Object.values(state.cards)
-          .filter((card) => new Date(card.due).getTime() <= currentTime)
-          .sort((a, b) => new Date(a.due).getTime() - new Date(b.due).getTime())
-          .map((card, sessionIndex) => ({
-            itemId: card.itemId,
-            sequence: state.reviewsCompleted + sessionIndex,
-          }))
-      );
+      setNowMs(Date.now());
     }
   };
 
+  const startPractice = () => {
+    const currentTime = Date.now();
+    const sortedCards = Object.values(state.cards)
+      .filter((card) => courseVocabularyIds.has(card.itemId))
+      .sort((a, b) => new Date(a.due).getTime() - new Date(b.due).getTime());
+    const duePracticeCards = sortedCards.filter(
+      (card) => new Date(card.due).getTime() <= currentTime
+    );
+    const sessionCards =
+      duePracticeCards.length > 0
+        ? duePracticeCards
+        : state.hearts === 0
+          ? sortedCards.slice(0, 5)
+          : [];
+
+    if (!sessionCards.length) return;
+
+    setNowMs(currentTime);
+    setPracticeQueue(
+      sessionCards.map((card, sessionIndex) => ({
+        itemId: card.itemId,
+        sequence: state.reviewsCompleted + sessionIndex,
+      }))
+    );
+    setPracticeCorrectAnswers(0);
+    setPracticeStarted(true);
+  };
+
   const beginLesson = (lesson: Lesson) => {
+    if (state.hearts === 0) {
+      toast.error("Restore your hearts in Practice before starting a lesson.");
+      return;
+    }
     setActiveLesson(lesson);
     setQuizIndex(0);
     setSelectedId(undefined);
@@ -639,7 +698,7 @@ export const DemoApp = ({
   };
 
   const activity = activeLesson
-    ? buildActivity(activeLesson.items[quizIndex], vocabulary, quizIndex)
+    ? buildActivity(activeLesson.items[quizIndex], courseVocabulary, quizIndex)
     : undefined;
 
   const checkLessonAnswer = () => {
@@ -654,6 +713,17 @@ export const DemoApp = ({
       setState((current) => ({
         ...current,
         hearts: Math.max(0, current.hearts - 1),
+        encountered: current.encountered.includes(activity.itemId)
+          ? current.encountered
+          : [...current.encountered, activity.itemId],
+        cards: current.cards[activity.itemId]
+          ? current.cards
+          : {
+              ...current.cards,
+              [activity.itemId]: serializeCard(
+                createFsrsCard(activity.itemId, new Date())
+              ),
+            },
       }));
       return;
     }
@@ -715,10 +785,14 @@ export const DemoApp = ({
   const practiceCard = practiceItemId
     ? deserializeCard(state.cards[practiceItemId])
     : undefined;
-  const practiceItem = vocabulary.find(({ id }) => id === practiceItemId);
+  const practiceItem = courseVocabulary.find(({ id }) => id === practiceItemId);
   const practiceActivity =
     practiceCard && practiceItem && practiceQueueItem
-      ? buildActivity(practiceItem, vocabulary, practiceQueueItem.sequence)
+      ? buildActivity(
+          practiceItem,
+          courseVocabulary,
+          practiceQueueItem.sequence
+        )
       : undefined;
 
   const checkPracticeAnswer = () => {
@@ -728,20 +802,19 @@ export const DemoApp = ({
     )?.correct;
     void (correct ? correctControls : incorrectControls).play();
     const reviewedAt = new Date();
-    const review = reviewFsrsCard(
-      practiceCard,
-      correct ? "correct" : "incorrect",
+    const outcome = correct ? "correct" : "incorrect";
+    const review = applyPracticeReviewPolicy(
+      reviewFsrsCard(practiceCard, outcome, reviewedAt),
+      outcome,
       reviewedAt
     );
     setResult(correct ? "correct" : "incorrect");
+    if (correct) setPracticeCorrectAnswers((current) => current + 1);
     setNowMs(reviewedAt.getTime());
     setState((current) => ({
       ...current,
       ...updateStreak(current, reviewedAt),
       xp: correct ? current.xp + 10 : current.xp,
-      hearts: correct
-        ? Math.min(MAX_HEARTS, current.hearts + 1)
-        : current.hearts,
       reviewsCompleted: current.reviewsCompleted + 1,
       cards: {
         ...current.cards,
@@ -752,7 +825,23 @@ export const DemoApp = ({
 
   const continuePractice = () => {
     if (practiceQueue.length === 1) {
-      showReward("Practice complete!", "Your review schedule is up to date");
+      const reward = applyPracticeHeartReward(
+        state.hearts,
+        practiceCorrectAnswers,
+        MAX_HEARTS
+      );
+      setState((current) => ({ ...current, hearts: reward.nextHearts }));
+      showReward(
+        "Practice complete!",
+        reward.heartsEarned === 0
+          ? "No heart earned · get at least 1 answer correct"
+          : reward.heartsRestored > 0
+            ? `+${reward.heartsRestored} ${
+                reward.heartsRestored === 1 ? "heart" : "hearts"
+              } · ${reward.nextHearts}/${MAX_HEARTS} hearts`
+            : "Hearts full · correct answers still earned XP"
+      );
+      setPracticeStarted(false);
     }
     setPracticeQueue((current) => current.slice(1));
     setSelectedId(undefined);
@@ -779,12 +868,18 @@ export const DemoApp = ({
     { id: "profile" as const, label: "Profile", icon: UserRound },
   ];
   const lessonInProgress = tab === "learn" && !!activeLesson;
+  const practiceInProgress =
+    tab === "practice" &&
+    practiceStarted &&
+    !!practiceActivity &&
+    !!practiceCard;
+  const focusedSession = lessonInProgress || practiceInProgress;
 
   return (
     <div
       className={cn(
         "min-h-screen bg-[#f7fbfe]",
-        lessonInProgress ? "pb-0 lg:pl-0" : "pb-24 lg:pb-0 lg:pl-64"
+        focusedSession ? "pb-0 lg:pl-0" : "pb-20 sm:pb-24 lg:pb-0 lg:pl-64"
       )}
     >
       {correctAudio}
@@ -794,7 +889,7 @@ export const DemoApp = ({
       <aside
         className={cn(
           "fixed inset-y-0 left-0 hidden w-64 flex-col border-r border-sky-100 bg-white/90 p-4 backdrop-blur-xl",
-          lessonInProgress ? "lg:hidden" : "lg:flex"
+          focusedSession ? "lg:hidden" : "lg:flex"
         )}
       >
         <Link href="/" className="flex items-center gap-3 px-3 py-5">
@@ -838,29 +933,55 @@ export const DemoApp = ({
 
       <header
         className={cn(
-          "sticky top-0 z-20 h-16 items-center justify-between border-b border-sky-100 bg-white/90 px-5 backdrop-blur-xl lg:hidden",
-          lessonInProgress ? "hidden" : "flex"
+          "sticky top-0 z-20 h-16 items-center gap-2 border-b border-sky-100 bg-white/95 px-3 shadow-sm backdrop-blur-xl sm:h-20 sm:gap-4 sm:px-5",
+          focusedSession ? "hidden" : "flex"
         )}
       >
         <Link
           href="/"
-          className="flex items-center gap-2 font-extrabold text-sky-800"
+          className="flex shrink-0 items-center gap-2 font-extrabold text-sky-800 lg:hidden"
         >
           <Image src="/tlicho-mark.svg" alt="" width={34} height={34} />
-          Tłı̨chǫ Learning
+          <span className="hidden sm:inline">Tłı̨chǫ Learning</span>
         </Link>
-        <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
+        <HeaderGameStats state={state} />
+        <span className="hidden shrink-0 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800 md:inline-flex">
           Demo
         </span>
       </header>
 
       <main
         className={cn(
-          "mx-auto px-5 py-8",
-          lessonInProgress ? "max-w-5xl" : "max-w-4xl"
+          "mx-auto",
+          focusedSession
+            ? "max-w-5xl px-4 py-4 sm:px-5 sm:py-8"
+            : "max-w-4xl px-5 py-3 sm:py-8"
         )}
       >
-        {tab === "learn" && activeLesson && activity ? (
+        {tab === "learn" && activeLesson && state.hearts === 0 ? (
+          <section className="mx-auto flex min-h-[calc(100svh-2rem)] max-w-xl items-center justify-center sm:min-h-[calc(100svh-4rem)]">
+            <div className="w-full rounded-3xl border-2 border-rose-100 bg-white p-7 text-center shadow-sm sm:p-10">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-rose-100 text-rose-500">
+                <Heart className="h-8 w-8" />
+              </div>
+              <h1 className="mt-5 text-2xl font-extrabold text-neutral-800 sm:text-3xl">
+                You’re out of hearts
+              </h1>
+              <p className="mx-auto mt-3 max-w-md font-medium text-neutral-600">
+                This lesson is paused. Review a short Practice session to refill
+                your hearts, then come back and continue.
+              </p>
+              <Button
+                size="lg"
+                className="mt-6 w-full"
+                variant="primary"
+                onClick={() => openTab("practice")}
+              >
+                <Dumbbell className="mr-2 h-5 w-5" /> Practice to refill
+              </Button>
+            </div>
+          </section>
+        ) : tab === "learn" && activeLesson && activity ? (
           <section className="mx-auto max-w-2xl">
             <button
               type="button"
@@ -886,7 +1007,7 @@ export const DemoApp = ({
                 }}
               />
             </div>
-            <div className="mt-6 rounded-3xl border-2 bg-white p-6 shadow-sm lg:p-10">
+            <div className="mt-4 rounded-3xl border-2 bg-white p-4 shadow-sm sm:mt-6 sm:p-6 lg:p-10">
               <ActivityPrompt
                 eyebrow="Learn"
                 instruction={activity.instruction}
@@ -894,6 +1015,7 @@ export const DemoApp = ({
                 focusLanguage={activity.focusLanguage}
                 promptAudioSrc={activity.promptAudioSrc}
                 revealAudioAfterAnswer={activity.revealAudioAfterAnswer}
+                translationAfterAnswer={activity.translationAfterAnswer}
                 answered={!!result}
                 companion={activity.companion}
               />
@@ -946,7 +1068,6 @@ export const DemoApp = ({
           </section>
         ) : tab === "learn" ? (
           <section className="mx-auto max-w-3xl">
-            <GameStatusBar state={state} />
             <div className="relative min-h-56 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#07559a] via-[#087cae] to-[#1aa6a6] p-7 pr-28 text-white shadow-[0_24px_60px_-38px_rgba(3,105,161,0.9)] sm:min-h-64 sm:p-9 sm:pr-52">
               <div className="absolute -bottom-16 -right-12 h-52 w-52 rounded-full bg-white/10 sm:h-72 sm:w-72" />
               <p className="font-bold text-sky-100">Your learning trail</p>
@@ -974,6 +1095,23 @@ export const DemoApp = ({
                 className="absolute -bottom-10 right-[-1rem] h-auto w-48 object-contain drop-shadow-xl sm:right-3 sm:w-56"
               />
             </div>
+            {state.hearts === 0 && (
+              <div className="mt-5 flex flex-col gap-4 rounded-3xl border-2 border-rose-100 bg-rose-50 p-5 text-rose-900 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-3">
+                  <Heart className="mt-0.5 h-6 w-6 shrink-0 text-rose-500" />
+                  <div>
+                    <strong className="block text-lg">Lessons paused</strong>
+                    <p className="mt-1 text-sm font-medium text-rose-800/80">
+                      Complete a Practice session to refill your hearts and
+                      unlock Learn.
+                    </p>
+                  </div>
+                </div>
+                <Button variant="primary" onClick={() => openTab("practice")}>
+                  Go to Practice
+                </Button>
+              </div>
+            )}
             <div className="mt-8 space-y-10">
               {units.map((unit, unitIndex) => (
                 <LessonPath
@@ -982,6 +1120,7 @@ export const DemoApp = ({
                   unitIndex={unitIndex}
                   completedLessons={state.completedLessons}
                   currentLessonId={currentLessonId}
+                  heartsDepleted={state.hearts === 0}
                   onBegin={beginLesson}
                 />
               ))}
@@ -989,13 +1128,20 @@ export const DemoApp = ({
           </section>
         ) : tab === "practice" && practiceActivity && practiceCard ? (
           <section className="mx-auto max-w-2xl">
-            <div className="flex items-center justify-between text-sm font-bold text-neutral-500">
+            <div className="flex items-center justify-between gap-3 text-sm font-bold text-neutral-500">
+              <button
+                type="button"
+                onClick={() => openTab("learn")}
+                className="flex items-center gap-1.5 rounded-xl px-1 py-1 hover:text-sky-700"
+              >
+                <ArrowLeft className="h-5 w-5" /> Exit
+              </button>
               <span>{practiceQueue.length} in this session</span>
-              <span className="flex items-center gap-1 text-rose-500">
-                <Heart className="h-5 w-5 fill-current" /> {state.hearts}
+              <span className="text-xs font-extrabold uppercase tracking-wider text-sky-600">
+                {state.hearts === 0 ? "Heart recovery" : "Review"}
               </span>
             </div>
-            <div className="mt-5 rounded-3xl border-2 bg-white p-6 shadow-sm lg:p-10">
+            <div className="mt-3 rounded-3xl border-2 bg-white p-4 shadow-sm sm:mt-5 sm:p-6 lg:p-10">
               <ActivityPrompt
                 eyebrow="Scheduled practice"
                 instruction={practiceActivity.instruction}
@@ -1003,6 +1149,7 @@ export const DemoApp = ({
                 focusLanguage={practiceActivity.focusLanguage}
                 promptAudioSrc={practiceActivity.promptAudioSrc}
                 revealAudioAfterAnswer={practiceActivity.revealAudioAfterAnswer}
+                translationAfterAnswer={practiceActivity.translationAfterAnswer}
                 answered={!!result}
                 companion={practiceActivity.companion}
               />
@@ -1010,13 +1157,14 @@ export const DemoApp = ({
                 activity={practiceActivity}
                 selectedId={selectedId}
                 result={result}
+                revealCorrectOnIncorrect
                 onSelect={setSelectedId}
               />
             </div>
             {result && (
               <div
                 className={cn(
-                  "mt-5 flex items-center gap-3 rounded-2xl p-4 font-bold",
+                  "mt-3 flex items-center gap-3 rounded-2xl p-3 text-sm font-bold sm:mt-5 sm:p-4 sm:text-base",
                   result === "correct"
                     ? "animate-answer-pop bg-emerald-100 text-emerald-800"
                     : "animate-answer-shake bg-rose-100 text-rose-800"
@@ -1030,7 +1178,11 @@ export const DemoApp = ({
                 <span>
                   {result === "correct"
                     ? "Correct — the next review is scheduled."
-                    : "Not quite — this word will return sooner."}
+                    : `Not quite — the correct answer is “${
+                        practiceActivity.options.find(
+                          (option) => option.correct
+                        )?.text ?? "shown in green"
+                      }”.`}
                 </span>
                 {result === "correct" && (
                   <span className="animate-xp-float ml-auto text-sm">
@@ -1041,7 +1193,7 @@ export const DemoApp = ({
             )}
             <Button
               size="lg"
-              className="mt-5 w-full"
+              className="mt-3 w-full sm:mt-5"
               variant={result === "incorrect" ? "danger" : "primary"}
               disabled={!selectedId}
               onClick={result ? continuePractice : checkPracticeAnswer}
@@ -1050,25 +1202,67 @@ export const DemoApp = ({
             </Button>
           </section>
         ) : tab === "practice" ? (
-          <section className="mx-auto max-w-xl rounded-3xl border-2 bg-white p-10 text-center shadow-sm">
-            <Clock3 className="mx-auto h-14 w-14 text-sky-600" />
-            <h1 className="mt-5 text-3xl font-extrabold text-neutral-800">
-              {state.encountered.length
-                ? "You’re caught up"
-                : "Learn a few words first"}
-            </h1>
-            <p className="mt-3 text-neutral-600">
-              {state.encountered.length
-                ? "Your review schedule is current."
-                : "Complete a Learn lesson and its words will appear here immediately."}
-            </p>
-            <Button
-              className="mt-6"
-              variant="primary"
-              onClick={() => openTab("learn")}
-            >
-              Go to Learn
-            </Button>
+          <section className="mx-auto max-w-2xl overflow-hidden rounded-[2rem] border-2 border-sky-100 bg-white shadow-[0_24px_60px_-38px_rgba(3,105,161,0.9)]">
+            <div className="relative min-h-[205px] overflow-hidden bg-gradient-to-br from-sky-700 via-sky-600 to-teal-500 p-5 pr-28 text-white sm:min-h-72 sm:p-9 sm:pr-64">
+              <div className="absolute -bottom-20 -right-12 h-64 w-64 rounded-full bg-white/10" />
+              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sky-100">
+                Targeted practice
+              </p>
+              <h1 className="mt-2 text-2xl font-black leading-tight sm:mt-3 sm:text-4xl">
+                Strengthen the words that need attention
+              </h1>
+              <p className="relative z-10 mt-3 hidden max-w-md font-medium text-sky-50 sm:block">
+                Short, focused activities bring back recent words—including
+                anything you missed in Learn.
+              </p>
+              <Image
+                src="/characters/tactile/moose-reading.png"
+                alt="Moose practice companion"
+                width={250}
+                height={250}
+                className="absolute bottom-0 right-2 h-auto w-32 object-contain drop-shadow-xl sm:right-3 sm:w-56"
+              />
+            </div>
+
+            <div className="border-t-2 border-sky-100 bg-white p-4 text-center sm:p-8">
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-700 sm:h-14 sm:w-14 sm:rounded-2xl">
+                <Clock3 className="h-5 w-5 sm:h-7 sm:w-7" />
+              </div>
+              <p className="mt-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sky-600 sm:mt-4 sm:text-sm">
+                Reviews left today
+              </p>
+              <strong className="mt-1 block text-3xl font-black text-neutral-800 sm:text-5xl">
+                {reviewsLeftToday}
+              </strong>
+              <p className="mx-auto mt-1 max-w-md text-xs font-medium text-neutral-600 sm:mt-3 sm:text-base">
+                {reviewsLeftToday > 0
+                  ? `${reviewsLeftToday} focused ${
+                      reviewsLeftToday === 1 ? "review is" : "reviews are"
+                    } ready. Correct answers earn hearts.`
+                  : state.encountered.length
+                    ? "You’re caught up for today. Finish another Learn lesson and new reviews can appear here right away."
+                    : "Complete a Learn lesson and its words will appear here for focused review."}
+              </p>
+              {reviewsLeftToday > 0 ? (
+                <Button
+                  size="lg"
+                  className="mt-3 h-11 w-full sm:mt-6 sm:h-12"
+                  variant="primary"
+                  onClick={startPractice}
+                >
+                  <Dumbbell className="mr-2 h-5 w-5" /> Start practice
+                </Button>
+              ) : (
+                <Button
+                  size="lg"
+                  className="mt-3 h-11 w-full sm:mt-6 sm:h-12"
+                  variant="primaryOutline"
+                  onClick={() => openTab("learn")}
+                >
+                  Go to Learn
+                </Button>
+              )}
+            </div>
           </section>
         ) : tab === "progress" ? (
           <section>
@@ -1144,8 +1338,8 @@ export const DemoApp = ({
 
       <nav
         className={cn(
-          "fixed inset-x-0 bottom-0 z-30 h-20 grid-cols-4 border-t border-sky-100 bg-white/95 px-2 backdrop-blur-xl lg:hidden",
-          lessonInProgress ? "hidden" : "grid"
+          "fixed inset-x-0 bottom-0 z-30 h-16 grid-cols-4 border-t border-sky-100 bg-white/95 px-2 backdrop-blur-xl sm:h-20 lg:hidden",
+          focusedSession ? "hidden" : "grid"
         )}
       >
         {navItems.map(({ id, label, icon: Icon }) => (
@@ -1154,11 +1348,11 @@ export const DemoApp = ({
             key={id}
             onClick={() => openTab(id)}
             className={cn(
-              "flex flex-col items-center justify-center gap-1 text-xs font-bold text-neutral-400",
+              "flex flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-neutral-400 sm:gap-1 sm:text-xs",
               tab === id && "text-sky-800"
             )}
           >
-            <Icon className="h-6 w-6" />
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
             {label}
           </button>
         ))}

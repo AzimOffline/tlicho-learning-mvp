@@ -6,4 +6,6 @@ Use `createFsrsCard(itemId)` when an item becomes eligible, `reviewFsrsCard(card
 
 A storage adapter converts its rows to/from `FsrsCard`, persists the returned card, and optionally stores the returned review event. In this app that adapter is `lib/fsrs-drizzle.ts`, outside this reusable folder.
 
+The app applies its immediate corrective-review rule in `lib/practice-review-policy.ts`. This stays outside the reusable scheduler: incorrect answers are still recorded as Again, while Practice keeps the item ready until the learner answers it correctly.
+
 To move the scheduler, copy this entire folder and install `ts-fsrs`.

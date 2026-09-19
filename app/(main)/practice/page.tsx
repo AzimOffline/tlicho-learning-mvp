@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import db from "@/db/drizzle";
 import { getUserProgress } from "@/db/queries";
-import { getDueFsrsCards } from "@/lib/fsrs-drizzle";
+import { getDueFsrsCards, getFsrsCardsForUser } from "@/lib/fsrs-drizzle";
 import { buildPracticeActivity } from "@/lib/practice-activities";
 
 import { PracticeSession } from "./practice-session";
@@ -27,7 +27,14 @@ const PracticePage = async () => {
 
   if (!progress?.activeCourse) redirect("/courses");
 
-  const activities = dueCards
+  const reviewCards =
+    dueCards.length > 0
+      ? dueCards
+      : progress.hearts === 0
+        ? (await getFsrsCardsForUser(userId)).slice(0, sessionSize)
+        : [];
+
+  const activities = reviewCards
     .slice(0, sessionSize)
     .filter((card) => card.vocabularyItem)
     .map((card, sessionIndex, cards) =>
@@ -66,11 +73,7 @@ const PracticePage = async () => {
 
   return (
     <div className="px-6 pb-28 lg:pb-10">
-      <PracticeSession
-        activities={activities}
-        dueCount={dueCards.length}
-        initialHearts={progress.hearts}
-      />
+      <PracticeSession activities={activities} dueCount={dueCards.length} />
     </div>
   );
 };

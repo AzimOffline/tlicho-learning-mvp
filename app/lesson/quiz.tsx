@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 
+import { Dumbbell, Heart } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Confetti from "react-confetti";
@@ -18,6 +19,7 @@ import {
   vocabularyItems,
 } from "@/db/schema";
 import { AudioButton } from "@/components/audio-button";
+import { Button } from "@/components/ui/button";
 import { getActivityCompanion } from "@/lib/activity-companions";
 import { useHeartsModal } from "@/store/use-hearts-modal";
 import { usePracticeModal } from "@/store/use-practice-modal";
@@ -165,6 +167,35 @@ export const Quiz = ({
       });
     }
   };
+
+  if (hearts === 0 && !userSubscription?.isActive) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f7fbfe] p-5">
+        {incorrectAudio}
+        {correctAudio}
+        <div className="w-full max-w-xl rounded-3xl border-2 border-rose-100 bg-white p-7 text-center shadow-sm sm:p-10">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-rose-100 text-rose-500">
+            <Heart className="h-8 w-8" />
+          </div>
+          <h1 className="mt-5 text-2xl font-extrabold text-neutral-800 sm:text-3xl">
+            You&apos;re out of hearts
+          </h1>
+          <p className="mx-auto mt-3 max-w-md font-medium text-neutral-600">
+            This lesson is paused. Complete a short Practice session to refill
+            your hearts, then return to Learn.
+          </p>
+          <Button
+            size="lg"
+            className="mt-6 w-full"
+            variant="primary"
+            onClick={() => router.push("/practice")}
+          >
+            <Dumbbell className="mr-2 h-5 w-5" /> Practice to refill
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   if (!challenge) {
     return (

@@ -9,6 +9,11 @@ import {
   reviewFsrsCard,
   selectDueItems,
 } from "@/lib/fsrs";
+import { applyPracticeReviewPolicy } from "@/lib/practice-review-policy";
+import {
+  applyPracticeHeartReward,
+  getPracticeHeartReward,
+} from "@/lib/practice-rewards";
 
 describe("reusable FSRS scheduler", () => {
   const now = new Date("2026-01-01T12:00:00.000Z");
@@ -45,6 +50,76 @@ describe("reusable FSRS scheduler", () => {
     assert.equal(result.event.rating, "Again");
     assert.equal(result.card.reps, 2);
     assert.ok(result.card.lapses >= first.lapses);
+  });
+
+  it("keeps an incorrect Practice item immediately ready for correction", () => {
+    const scheduled = reviewFsrsCard(
+      createFsrsCard("item-1", now),
+      "incorrect",
+      now
+    );
+    const result = applyPracticeReviewPolicy(scheduled, "incorrect", now);
+
+    assert.equal(result.event.rating, "Again");
+    assert.equal(result.card.due.getTime(), now.getTime());
+    assert.equal(result.event.dueAfter.getTime(), now.getTime());
+  });
+
+  it("preserves the FSRS due date after a correct Practice answer", () => {
+    const scheduled = reviewFsrsCard(
+      createFsrsCard("item-1", now),
+      "correct",
+      now
+    );
+    const result = applyPracticeReviewPolicy(scheduled, "correct", now);
+
+    assert.ok(result.card.due.getTime() > now.getTime());
+    assert.equal(result.card.due.getTime(), scheduled.card.due.getTime());
+  });
+
+  it("shows five reviews immediately after five misses in a seven-item session", () => {
+    const reviewedCards = Array.from({ length: 7 }, (_, index) => {
+      const outcome = index < 5 ? "incorrect" : "correct";
+      return applyPracticeReviewPolicy(
+        reviewFsrsCard(createFsrsCard(`item-${index}`, now), outcome, now),
+        outcome,
+        now
+      ).card;
+    });
+
+    const ready = selectDueItems(
+      reviewedCards.map((card) => ({ card, payload: card.itemId })),
+      now,
+      reviewedCards.length
+    );
+
+    assert.equal(ready.length, 5);
+    assert.deepEqual(
+      ready.map(({ card }) => card.itemId),
+      ["item-0", "item-1", "item-2", "item-3", "item-4"]
+    );
+  });
+
+  it("rewards correct Practice answers without exceeding the heart cap", () => {
+    assert.equal(getPracticeHeartReward(0), 0);
+    assert.equal(getPracticeHeartReward(1), 1);
+    assert.equal(getPracticeHeartReward(2), 1);
+    assert.equal(getPracticeHeartReward(3), 1);
+    assert.equal(getPracticeHeartReward(4), 2);
+    assert.equal(getPracticeHeartReward(5), 2);
+    assert.equal(getPracticeHeartReward(6), 2);
+    assert.equal(getPracticeHeartReward(7), 3);
+
+    assert.deepEqual(applyPracticeHeartReward(1, 6, 5), {
+      heartsEarned: 2,
+      heartsRestored: 2,
+      nextHearts: 3,
+    });
+    assert.deepEqual(applyPracticeHeartReward(5, 6, 5), {
+      heartsEarned: 2,
+      heartsRestored: 0,
+      nextHearts: 5,
+    });
   });
 
   it("selects only due items in due-date order and respects session size", () => {
@@ -104,7 +179,7 @@ describe("reusable FSRS scheduler", () => {
     assert.match(demoUi, /sequence: state\.reviewsCompleted \+ sessionIndex/);
     assert.match(
       demoUi,
-      /buildActivity\(practiceItem, vocabulary, practiceQueueItem\.sequence\)/
+      /buildActivity\(\s*practiceItem,\s*courseVocabulary,\s*practiceQueueItem\.sequence\s*\)/
     );
     assert.doesNotMatch(
       demoUi,

@@ -20,6 +20,7 @@ export type PracticeActivity = {
   companion: ActivityCompanion;
   promptAudioSrc: string | null;
   revealAudioAfterAnswer: boolean;
+  translationAfterAnswer: string | null;
   options: PracticeOption[];
 };
 
@@ -85,6 +86,7 @@ export const buildPracticeActivity = (
     companion: getActivityCompanion(`${item.id}:${sequence}`),
     promptAudioSrc: item.audioSrc,
     revealAudioAfterAnswer: mode === 1,
+    translationAfterAnswer: mode === 3 ? item.english : null,
     options: choices.map((choice) => ({
       id: choice.id,
       text: answerInEnglish ? choice.english : choice.tlicho,

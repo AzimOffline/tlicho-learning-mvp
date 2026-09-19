@@ -18,6 +18,7 @@ type UnitProps = {
       })
     | undefined;
   activeLessonPercentage: number;
+  heartsDepleted: boolean;
 };
 
 export const Unit = ({
@@ -27,6 +28,7 @@ export const Unit = ({
   lessons,
   activeLesson,
   activeLessonPercentage,
+  heartsDepleted,
 }: UnitProps) => {
   const companion =
     tlichoUnitDefinitions[(order - 1) % tlichoUnitDefinitions.length];
@@ -42,7 +44,7 @@ export const Unit = ({
       <div className="relative flex flex-col items-center">
         {lessons.map((lesson, i) => {
           const isCurrent = lesson.id === activeLesson?.id;
-          const isLocked = !lesson.completed && !isCurrent;
+          const isLocked = heartsDepleted || (!lesson.completed && !isCurrent);
 
           return (
             <LessonButton

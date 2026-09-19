@@ -13,6 +13,7 @@ import {
   getUserSubscription,
 } from "@/db/queries";
 import { challengeProgress, challenges, userProgress } from "@/db/schema";
+import { ensureFsrsCard } from "@/lib/fsrs-drizzle";
 
 export const upsertUserProgress = async (courseId: number) => {
   const { userId } = await auth();
@@ -95,6 +96,10 @@ export const reduceHearts = async (challengeId: number) => {
       hearts: Math.max(currentUserProgress.hearts - 1, 0),
     })
     .where(eq(userProgress.userId, userId));
+
+  if (challenge.vocabularyItemId) {
+    await ensureFsrsCard(userId, challenge.vocabularyItemId);
+  }
 
   revalidatePath("/shop");
   revalidatePath("/learn");

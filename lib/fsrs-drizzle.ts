@@ -8,6 +8,7 @@ import {
   type FsrsCard,
   type ReviewOutcome,
 } from "@/lib/fsrs";
+import { applyPracticeReviewPolicy } from "@/lib/practice-review-policy";
 
 type CardRow = typeof fsrsCards.$inferSelect;
 
@@ -75,7 +76,11 @@ export const applyFsrsReview = async (
 
   if (!row) throw new Error("Unable to create review card.");
 
-  const result = reviewFsrsCard(fromRow(row), outcome, now);
+  const result = applyPracticeReviewPolicy(
+    reviewFsrsCard(fromRow(row), outcome, now),
+    outcome,
+    now
+  );
 
   await db
     .update(fsrsCards)

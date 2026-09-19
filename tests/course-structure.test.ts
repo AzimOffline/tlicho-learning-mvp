@@ -4,6 +4,7 @@ import { describe, it } from "node:test";
 import {
   buildBalancedLessonGroups,
   classifyTlichoUnit,
+  tlichoUnitDefinitions,
 } from "@/lib/tlicho-course-structure";
 
 describe("Tłı̨chǫ course structure", () => {
@@ -24,7 +25,22 @@ describe("Tłı̨chǫ course structure", () => {
   it("keeps topic-based unit classification", () => {
     assert.equal(classifyTlichoUnit("Family - People"), 0);
     assert.equal(classifyTlichoUnit("Food and Eating"), 1);
-    assert.equal(classifyTlichoUnit("Sky and Weather"), 4);
-    assert.equal(classifyTlichoUnit(null), 5);
+    assert.equal(classifyTlichoUnit("Sky and Weather"), null);
+    assert.equal(classifyTlichoUnit("Time - Questions"), null);
+    assert.equal(classifyTlichoUnit(null), 4);
+  });
+
+  it("uses each non-moose unit companion exactly once", () => {
+    assert.equal(tlichoUnitDefinitions.length, 5);
+    assert.deepEqual(
+      tlichoUnitDefinitions.map(({ companionSrc }) => companionSrc),
+      [
+        "/characters/tactile/beaver.png",
+        "/characters/tactile/caribou.png",
+        "/characters/tactile/grizzly-bear.png",
+        "/characters/tactile/bison.png",
+        "/characters/tactile/red-fox.png",
+      ]
+    );
   });
 });

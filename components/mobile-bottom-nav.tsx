@@ -17,7 +17,7 @@ export const MobileBottomNav = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 grid h-20 grid-cols-4 border-t border-sky-100 bg-white/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-50 grid h-16 grid-cols-4 border-t border-sky-100 bg-white/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl sm:h-20 lg:hidden">
       {items.map(({ label, href, icon: Icon }) => {
         const active = pathname === href || pathname.startsWith(`${href}/`);
         return (
@@ -25,11 +25,13 @@ export const MobileBottomNav = () => {
             key={href}
             href={href}
             className={cn(
-              "flex flex-col items-center justify-center gap-1 text-xs font-bold text-neutral-400",
+              "flex flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-neutral-400 sm:gap-1 sm:text-xs",
               active && "text-sky-800"
             )}
           >
-            <Icon className={cn("h-6 w-6", active && "stroke-[3]")} />
+            <Icon
+              className={cn("h-5 w-5 sm:h-6 sm:w-6", active && "stroke-[3]")}
+            />
             {label}
           </Link>
         );

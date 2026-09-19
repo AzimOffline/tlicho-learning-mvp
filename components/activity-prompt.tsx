@@ -13,6 +13,7 @@ type ActivityPromptProps = {
   focusLanguage: "Tłı̨chǫ" | "English" | "Audio";
   promptAudioSrc: string | null;
   revealAudioAfterAnswer: boolean;
+  translationAfterAnswer?: string | null;
   answered: boolean;
   companion: ActivityCompanion;
 };
@@ -24,24 +25,25 @@ export const ActivityPrompt = ({
   focusLanguage,
   promptAudioSrc,
   revealAudioAfterAnswer,
+  translationAfterAnswer,
   answered,
   companion,
 }: ActivityPromptProps) => (
   <>
-    <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sky-600">
+    <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600 sm:text-xs">
       {eyebrow}
     </p>
-    <h1 className="mt-2 text-lg font-extrabold leading-snug text-neutral-600 lg:text-xl">
+    <h1 className="mt-1.5 text-lg font-extrabold leading-snug text-neutral-600 sm:mt-2 lg:text-xl">
       {instruction}
     </h1>
 
-    <div className="mt-5 flex min-h-32 items-center gap-3 rounded-2xl border-2 border-sky-100 bg-sky-50 px-4 py-4 sm:gap-6 sm:px-6">
-      <div className="relative h-24 w-24 shrink-0 self-end sm:h-28 sm:w-28">
+    <div className="mt-3 flex min-h-24 items-center gap-3 rounded-2xl border-2 border-sky-100 bg-sky-50 px-3 py-3 sm:mt-5 sm:min-h-32 sm:gap-6 sm:px-6 sm:py-4">
+      <div className="relative h-16 w-16 shrink-0 self-end sm:h-28 sm:w-28">
         <Image
           src={companion.src}
           alt={companion.alt}
           fill
-          sizes="(max-width: 640px) 96px, 112px"
+          sizes="(max-width: 640px) 64px, 112px"
           className="object-contain drop-shadow-md"
         />
       </div>
@@ -54,19 +56,31 @@ export const ActivityPrompt = ({
             </span>
             <p
               lang={focusLanguage === "Tłı̨chǫ" ? "dgr" : "en"}
-              className="mt-1 break-words text-3xl font-extrabold text-neutral-800 lg:text-4xl"
+              className="mt-1 break-words text-2xl font-extrabold text-neutral-800 sm:text-3xl lg:text-4xl"
             >
               {focusText}
             </p>
           </>
         ) : (
-          <AudioButton src={promptAudioSrc} className="mx-auto" />
+          <div className="flex flex-col items-center gap-2">
+            <AudioButton src={promptAudioSrc} className="mx-auto" />
+            {answered && translationAfterAnswer && (
+              <div className="animate-answer-pop rounded-xl bg-white/90 px-3 py-2 text-center shadow-sm">
+                <span className="block text-[10px] font-extrabold uppercase tracking-[0.16em] text-sky-600">
+                  English meaning
+                </span>
+                <strong className="mt-0.5 block text-sm text-neutral-800 sm:text-base">
+                  {translationAfterAnswer}
+                </strong>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
 
     {focusText && (!revealAudioAfterAnswer || answered) && (
-      <AudioButton src={promptAudioSrc} className="mt-5" />
+      <AudioButton src={promptAudioSrc} className="mt-3 sm:mt-5" />
     )}
   </>
 );

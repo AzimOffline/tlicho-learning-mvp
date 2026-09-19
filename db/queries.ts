@@ -9,6 +9,7 @@ import {
   isLegacyChallengeCompleted,
   isLegacyLessonCompleted,
 } from "@/lib/legacy-progress";
+import { isRetiredTlichoUnit } from "@/lib/tlicho-course-structure";
 
 import db from "./drizzle";
 import {
@@ -69,14 +70,20 @@ export const getUnits = cache(async () => {
     },
   });
 
-  const normalizedData = data.map((unit) => {
+  const visibleUnits = data.filter(({ title }) => !isRetiredTlichoUnit(title));
+  const normalizedData = visibleUnits.map((unit, index) => {
     const lessonsWithCompletedStatus = unit.lessons.map((lesson) => {
       const allCompletedChallenges = isLegacyLessonCompleted(lesson.challenges);
 
       return { ...lesson, completed: allCompletedChallenges };
     });
 
-    return { ...unit, lessons: lessonsWithCompletedStatus };
+    return {
+      ...unit,
+      order: index + 1,
+      title: unit.title.replace(/^Unit \d+:/, `Unit ${index + 1}:`),
+      lessons: lessonsWithCompletedStatus,
+    };
   });
 
   return normalizedData;
@@ -126,8 +133,9 @@ export const getCourseProgress = cache(async () => {
     },
   });
 
-  const firstUncompletedLesson =
-    findFirstLegacyIncompleteLesson(unitsInActiveCourse);
+  const firstUncompletedLesson = findFirstLegacyIncompleteLesson(
+    unitsInActiveCourse.filter(({ title }) => !isRetiredTlichoUnit(title))
+  );
 
   return {
     activeLesson: firstUncompletedLesson,

@@ -4,7 +4,7 @@ export const tlichoUnitDefinitions = [
     description: "People, family, and relationships",
     matches: ["people", "family"],
     lessonTitles: ["Meet the People", "Family & Relationships"],
-    companionSrc: "/characters/tactile/moose-reading.png",
+    companionSrc: "/characters/tactile/beaver.png",
   },
   {
     title: "Home & Daily Life",
@@ -18,7 +18,7 @@ export const tlichoUnitDefinitions = [
       "Tools & Work",
       "Daily Life",
     ],
-    companionSrc: "/characters/tactile/beaver.png",
+    companionSrc: "/characters/tactile/caribou.png",
   },
   {
     title: "Land & Living World",
@@ -29,20 +29,13 @@ export const tlichoUnitDefinitions = [
       "Land, Water & Places",
       "Getting Around",
     ],
-    companionSrc: "/characters/tactile/caribou.png",
+    companionSrc: "/characters/tactile/grizzly-bear.png",
   },
   {
     title: "Body & Wellbeing",
     description: "The body, health, mind, and spirit",
     matches: ["body", "mind and spirit"],
     lessonTitles: ["Body & Health", "Mind & Feelings", "Being Well"],
-    companionSrc: "/characters/tactile/grizzly-bear.png",
-  },
-  {
-    title: "Weather & Time",
-    description: "Time, seasons, weather, and the sky",
-    matches: ["time", "sky and weather"],
-    lessonTitles: ["Weather & Sky", "Time & Seasons"],
     companionSrc: "/characters/tactile/bison.png",
   },
   {
@@ -59,14 +52,25 @@ export const tlichoUnitDefinitions = [
   },
 ] as const;
 
+const retiredUnitMatches = ["time", "sky and weather"];
+
 export const classifyTlichoUnit = (category: string | null) => {
   const normalizedCategory = category?.toLocaleLowerCase() ?? "";
   const index = tlichoUnitDefinitions.findIndex(({ matches }) =>
     matches.some((match) => normalizedCategory.includes(match))
   );
 
-  return index === -1 ? tlichoUnitDefinitions.length - 1 : index;
+  if (index !== -1) return index;
+
+  const belongsToRetiredUnit = retiredUnitMatches.some((match) =>
+    normalizedCategory.includes(match)
+  );
+
+  return belongsToRetiredUnit ? null : tlichoUnitDefinitions.length - 1;
 };
+
+export const isRetiredTlichoUnit = (title: string) =>
+  title.toLocaleLowerCase().includes("weather & time");
 
 export const buildBalancedLessonGroups = <T>(
   entries: T[],
