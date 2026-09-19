@@ -1,19 +1,17 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata, Viewport } from "next";
-import { Nunito } from "next/font/google";
 
 import { ExitModal } from "@/components/modals/exit-modal";
 import { HeartsModal } from "@/components/modals/hearts-modal";
 import { PracticeModal } from "@/components/modals/practice-modal";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config";
+import { isDemoMode } from "@/lib/demo-mode";
 
 import "./globals.css";
 
-const font = Nunito({ subsets: ["latin"] });
-
 export const viewport: Viewport = {
-  themeColor: "#22C55E",
+  themeColor: "#0369A1",
 };
 
 export const metadata: Metadata = siteConfig;
@@ -23,6 +21,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  if (isDemoMode()) {
+    return (
+      <html lang="en">
+        <body>
+          <Toaster theme="light" richColors closeButton />
+          {children}
+        </body>
+      </html>
+    );
+  }
+
   return (
     <ClerkProvider
       appearance={{
@@ -30,14 +39,14 @@ export default function RootLayout({
           logoImageUrl: "/favicon.ico",
         },
         variables: {
-          colorPrimary: "#22C55E",
+          colorPrimary: "#0369A1",
         },
       }}
       telemetry={false}
       afterSignOutUrl="/"
     >
       <html lang="en">
-        <body className={font.className}>
+        <body>
           <Toaster theme="light" richColors closeButton />
           <ExitModal />
           <HeartsModal />

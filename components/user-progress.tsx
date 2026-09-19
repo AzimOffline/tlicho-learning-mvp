@@ -32,7 +32,7 @@ export const UserProgress = ({
         </Button>
       </Link>
 
-      <Link href="/shop" prefetch>
+      <Link href="/progress" prefetch>
         <Button variant="ghost" className="text-orange-500">
           <Image
             src="/points.svg"
@@ -45,7 +45,7 @@ export const UserProgress = ({
         </Button>
       </Link>
 
-      <Link href="/shop" prefetch>
+      <Link href="/practice" prefetch>
         <Button variant="ghost" className="text-rose-500">
           <Image
             src="/heart.svg"

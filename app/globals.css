@@ -10,8 +10,8 @@ body,
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 205 50% 98%;
+    --foreground: 208 74% 18%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -34,11 +34,11 @@ body,
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
+    --border: 204 45% 90%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
   }
 
   .dark {
@@ -72,11 +72,192 @@ body,
   }
 }
 
+@keyframes answer-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  65% {
+    transform: translateY(-2px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes answer-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-7px);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+}
+
+@keyframes score-pop {
+  0% {
+    transform: scale(0.7);
+  }
+  60% {
+    transform: scale(1.22);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes xp-float {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes reward-burst {
+  0% {
+    opacity: 0;
+    transform: scale(0.55) rotate(-4deg);
+  }
+  60% {
+    transform: scale(1.08) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes reward-spark {
+  0%,
+  100% {
+    transform: scale(0.7) rotate(-12deg);
+  }
+  50% {
+    transform: scale(1.25) rotate(12deg);
+  }
+}
+
+@keyframes streak-flame {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg) scale(1);
+  }
+  50% {
+    transform: translateY(-2px) rotate(3deg) scale(1.08);
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  82%,
+  100% {
+    transform: scale(1);
+  }
+  88% {
+    transform: scale(1.12);
+  }
+  94% {
+    transform: scale(0.98);
+  }
+}
+
+@keyframes node-complete {
+  0% {
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@layer utilities {
+  .animate-answer-pop {
+    animation: answer-pop 380ms ease-out both;
+  }
+
+  .animate-answer-shake {
+    animation: answer-shake 360ms ease-out both;
+  }
+
+  .animate-score-pop {
+    animation: score-pop 420ms ease-out both;
+  }
+
+  .animate-xp-float {
+    animation: xp-float 600ms ease-out both;
+  }
+
+  .animate-reward-burst {
+    animation: reward-burst 480ms cubic-bezier(0.2, 0.9, 0.25, 1.25) both;
+  }
+
+  .animate-reward-spark {
+    animation: reward-spark 750ms ease-in-out infinite;
+  }
+
+  .animate-streak-flame {
+    animation: streak-flame 1.8s ease-in-out infinite;
+  }
+
+  .animate-heartbeat {
+    animation: heartbeat 2.4s ease-in-out infinite;
+  }
+
+  .animate-node-complete {
+    animation: node-complete 420ms ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-answer-pop,
+  .animate-answer-shake,
+  .animate-score-pop,
+  .animate-xp-float,
+  .animate-reward-burst,
+  .animate-reward-spark,
+  .animate-streak-flame,
+  .animate-heartbeat,
+  .animate-node-complete {
+    animation: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Segoe UI", "Noto Sans", "Arial Unicode MS", Arial, sans-serif;
+    background-image:
+      radial-gradient(
+        circle at 8% 8%,
+        rgb(224 242 254 / 45%),
+        transparent 28rem
+      ),
+      radial-gradient(
+        circle at 92% 18%,
+        rgb(204 251 241 / 38%),
+        transparent 26rem
+      );
+    background-attachment: fixed;
   }
 }

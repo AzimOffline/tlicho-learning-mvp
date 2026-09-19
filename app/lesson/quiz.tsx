@@ -11,7 +11,14 @@ import { toast } from "sonner";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import { reduceHearts } from "@/actions/user-progress";
 import { MAX_HEARTS } from "@/constants";
-import { challengeOptions, challenges, userSubscription } from "@/db/schema";
+import {
+  challengeOptions,
+  challenges,
+  userSubscription,
+  vocabularyItems,
+} from "@/db/schema";
+import { AudioButton } from "@/components/audio-button";
+import { getActivityCompanion } from "@/lib/activity-companions";
 import { useHeartsModal } from "@/store/use-hearts-modal";
 import { usePracticeModal } from "@/store/use-practice-modal";
 
@@ -28,6 +35,7 @@ type QuizProps = {
   initialLessonChallenges: (typeof challenges.$inferSelect & {
     completed: boolean;
     challengeOptions: (typeof challengeOptions.$inferSelect)[];
+    vocabularyItem: typeof vocabularyItems.$inferSelect | null;
   })[];
   userSubscription:
     | (typeof userSubscription.$inferSelect & {
@@ -83,6 +91,11 @@ export const Quiz = ({
 
   const challenge = challenges[activeIndex];
   const options = challenge?.challengeOptions ?? [];
+  const companion = challenge
+    ? getActivityCompanion(
+        `${challenge.vocabularyItem?.id ?? challenge.id}:${activeIndex}`
+      )
+    : null;
 
   const onNext = () => {
     setActiveIndex((current) => current + 1);
@@ -221,9 +234,30 @@ export const Quiz = ({
       <div className="flex-1">
         <div className="flex h-full items-center justify-center">
           <div className="flex w-full flex-col gap-y-12 px-6 lg:min-h-[350px] lg:w-[600px] lg:px-0">
-            <h1 className="text-center text-lg font-bold text-neutral-700 lg:text-start lg:text-3xl">
-              {title}
-            </h1>
+            <div className="flex items-center gap-5 rounded-2xl border-2 border-sky-100 bg-sky-50 p-4 lg:gap-8 lg:p-6">
+              {companion && (
+                <div className="relative h-24 w-24 shrink-0 self-end lg:h-32 lg:w-32">
+                  <Image
+                    src={companion.src}
+                    alt={companion.alt}
+                    fill
+                    sizes="(max-width: 1024px) 96px, 128px"
+                    className="object-contain drop-shadow-md"
+                  />
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <h1 className="text-lg font-bold text-neutral-700 lg:text-3xl">
+                  {title}
+                </h1>
+                {challenge.vocabularyItem && (
+                  <AudioButton
+                    src={challenge.vocabularyItem.audioSrc}
+                    className="mt-4"
+                  />
+                )}
+              </div>
+            </div>
 
             <div>
               {challenge.type === "ASSIST" && (

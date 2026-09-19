@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Northern sky and lake mark</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#075985"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#sky)"/>
+  <path d="M8 39 20 24l8 10 8-14 20 19Z" fill="#e0f2fe" opacity=".95"/>
+  <path d="M7 43c9-4 17-4 25 0s16 4 25 0v12H7Z" fill="#0f766e"/>
+  <path d="M12 49c7-3 13-3 20 0s13 3 20 0" fill="none" stroke="#99f6e4" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="48" cy="15" r="4" fill="#fef3c7"/>
+</svg>

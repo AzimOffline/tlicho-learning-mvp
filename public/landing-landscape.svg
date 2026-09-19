@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 660" role="img" aria-labelledby="title desc">
+  <title id="title">Northern lake landscape</title>
+  <desc id="desc">Layered blue hills, spruce trees, a lake, clouds, and a pale northern moon.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#075a9f"/>
+      <stop offset="0.56" stop-color="#1a9fd2"/>
+      <stop offset="1" stop-color="#64c8ea"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#159bd0"/>
+      <stop offset="1" stop-color="#0579b9"/>
+    </linearGradient>
+  </defs>
+  <rect width="760" height="660" fill="url(#sky)"/>
+  <circle cx="648" cy="100" r="48" fill="#d7f3ff" opacity=".9"/>
+  <g fill="#bceaff" opacity=".25">
+    <path d="M22 317c0-20 16-36 36-36 15 0 28 9 34 22 5-5 13-8 21-8 17 0 31 13 33 30H22Z"/>
+    <path d="M532 245c0-14 12-26 26-26 11 0 20 6 24 15 4-4 9-6 15-6 12 0 22 9 24 21h-89Z"/>
+  </g>
+  <path d="M0 432 91 342l73 48 119-119 91 89 82-61 138 129 85-74 81 76v112H0Z" fill="#1688c1" opacity=".82"/>
+  <path d="M0 457 106 382l75 53 109-76 89 64 108-86 102 72 70-39 101 87v97H0Z" fill="#0875ad" opacity=".88"/>
+  <g fill="#075b91" opacity=".95">
+    <path d="m20 473 18-48 18 48H46l15 32H15l14-32Z"/><path d="m67 462 16-42 16 42H90l14 30H63l13-30Z"/>
+    <path d="m126 477 20-54 20 54h-11l17 36h-51l16-36Z"/><path d="m193 468 17-45 17 45h-9l14 31h-44l14-31Z"/>
+    <path d="m252 481 22-59 22 59h-12l18 39h-56l17-39Z"/><path d="m326 469 17-47 18 47h-10l15 32h-46l15-32Z"/>
+    <path d="m393 480 21-56 21 56h-11l17 37h-53l16-37Z"/><path d="m465 467 17-45 17 45h-9l14 31h-44l14-31Z"/>
+    <path d="m526 482 22-60 23 60h-13l19 40h-58l18-40Z"/><path d="m607 469 18-49 19 49h-10l15 33h-48l15-33Z"/>
+    <path d="m676 482 22-58 21 58h-12l18 38h-55l17-38Z"/><path d="m728 469 16-44 17 44h-9l13 30h-42l13-30Z"/>
+  </g>
+  <path d="M0 512c134-19 249 13 360 2 128-13 235-38 400-10v156H0Z" fill="url(#lake)"/>
+  <g fill="none" stroke="#82d7ed" stroke-linecap="round" opacity=".44">
+    <path d="M28 553c120-17 199 18 305 4s201-28 387-2" stroke-width="5"/>
+    <path d="M70 596c102-12 192 13 292 3s189-20 328-2" stroke-width="4"/>
+  </g>
+</svg>

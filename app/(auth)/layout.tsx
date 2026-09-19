@@ -2,6 +2,8 @@ import type { PropsWithChildren } from "react";
 
 import { Header } from "./header";
 
+export const dynamic = "force-dynamic";
+
 const AuthLayout = ({ children }: PropsWithChildren) => {
   return (
     <div className="flex min-h-screen flex-col">

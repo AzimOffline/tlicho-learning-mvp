@@ -1,4 +1,5 @@
 import { lessons, units } from "@/db/schema";
+import { tlichoUnitDefinitions } from "@/lib/tlicho-course-structure";
 
 import { LessonButton } from "./lesson-button";
 import { UnitBanner } from "./unit-banner";
@@ -20,15 +21,23 @@ type UnitProps = {
 };
 
 export const Unit = ({
+  order,
   title,
   description,
   lessons,
   activeLesson,
   activeLessonPercentage,
 }: UnitProps) => {
+  const companion =
+    tlichoUnitDefinitions[(order - 1) % tlichoUnitDefinitions.length];
+
   return (
     <>
-      <UnitBanner title={title} description={description} />
+      <UnitBanner
+        title={title}
+        description={description}
+        companionSrc={companion.companionSrc}
+      />
 
       <div className="relative flex flex-col items-center">
         {lessons.map((lesson, i) => {

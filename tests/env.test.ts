@@ -8,8 +8,15 @@ import {
   getStripeEnvironment,
   parseAdminIds,
 } from "@/lib/env";
+import { resolveDemoMode } from "@/lib/demo-mode";
 
 describe("runtime environment validation", () => {
+  it("enables the local demo when Clerk is absent or demo mode is forced", () => {
+    assert.equal(resolveDemoMode(undefined, undefined), true);
+    assert.equal(resolveDemoMode("true", "pk_test_configured"), true);
+    assert.equal(resolveDemoMode("false", "pk_test_configured"), false);
+  });
+
   it("normalizes the public app URL", () => {
     assert.deepEqual(
       getPublicAppEnvironment({

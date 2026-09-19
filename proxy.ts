@@ -1,10 +1,9 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-import { getClerkEnvironment } from "@/lib/env";
+import { isDemoMode } from "@/lib/demo-mode";
 
-getClerkEnvironment();
-
-export default clerkMiddleware();
+export default isDemoMode() ? () => NextResponse.next() : clerkMiddleware();
 
 export const config = {
   matcher: [

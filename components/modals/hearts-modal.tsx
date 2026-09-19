@@ -25,7 +25,7 @@ export const HeartsModal = () => {
 
   const onClick = () => {
     close();
-    router.push("/store");
+    router.push("/practice");
   };
 
   if (!isClient) return null;
@@ -35,12 +35,7 @@ export const HeartsModal = () => {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <div className="mb-5 flex w-full items-center justify-center">
-            <Image
-              src="/mascot_bad.svg"
-              alt="Mascot Bad"
-              height={80}
-              width={80}
-            />
+            <Image src="/tlicho-mark.svg" alt="" height={80} width={80} />
           </div>
 
           <DialogTitle className="text-center text-2xl font-bold">
@@ -48,7 +43,7 @@ export const HeartsModal = () => {
           </DialogTitle>
 
           <DialogDescription className="text-center text-base">
-            Get Pro for unlimited hearts, or purchase them in the store.
+            Practice due words to restore hearts without spending XP.
           </DialogDescription>
         </DialogHeader>
 
@@ -60,7 +55,7 @@ export const HeartsModal = () => {
               size="lg"
               onClick={onClick}
             >
-              Get unlimited hearts
+              Go to Practice
             </Button>
 
             <Button

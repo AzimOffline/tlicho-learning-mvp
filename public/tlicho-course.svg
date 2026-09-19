@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 72" role="img" aria-labelledby="title">
+  <title id="title">Tłı̨chǫ course landscape</title>
+  <rect width="96" height="72" rx="12" fill="#e0f2fe"/>
+  <circle cx="73" cy="17" r="8" fill="#fbbf24"/>
+  <path d="M0 44 24 19l16 18 13-14 43 31v18H0Z" fill="#0c4a6e"/>
+  <path d="M0 49c17-6 31-5 46 1s31 7 50 0v22H0Z" fill="#0f766e"/>
+  <path d="M7 59c14-4 25-4 38 0s26 4 44-1" fill="none" stroke="#99f6e4" stroke-width="4" stroke-linecap="round"/>
+</svg>

@@ -1,5 +1,5 @@
 {
-  "name": "duolingo-clone",
+  "name": "tlicho-learning-mvp",
   "version": "1.0.1",
   "private": true,
   "scripts": {
@@ -9,13 +9,14 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit --incremental false",
-    "test": "tsx --test tests/*.test.ts",
+    "test": "node --import ./scripts/tsx-userinfo-workaround.mjs --import tsx --test tests/*.test.ts",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "db:prod": "tsx ./scripts/prod.ts"
+    "db:prod": "tsx ./scripts/prod.ts",
+    "db:seed:tlicho": "tsx ./scripts/seed-tlicho.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.8.0",
@@ -43,6 +44,7 @@
     "stripe": "^22.6.2",
     "tailwind-merge": "^3.7.0",
     "tailwindcss-animate": "^1.0.7",
+    "ts-fsrs": "^5.4.2",
     "zustand": "^5.0.15"
   },
   "devDependencies": {
@@ -63,64 +65,12 @@
     "typescript": "^6"
   },
   "packageManager": "pnpm@11.11.0",
-  "author": {
-    "name": "Sanidhya Kumar Verma",
-    "email": "sanidhyyy@gmail.com",
-    "url": "https://github.com/sanidhyy"
-  },
-  "description": "Interactive platform for language learning with lessons, quizzes, and progress tracking.",
+  "description": "A Duolingo-style Tłı̨chǫ language-learning prototype.",
   "keywords": [
-    "reactjs",
-    "nextjs",
-    "vercel",
-    "react",
-    "duolingo-clone",
-    "learn-language",
-    "shadcn",
-    "shadcn-ui",
-    "radix-ui",
-    "cn",
-    "clsx",
-    "lingo",
-    "postgresql",
-    "sonner",
-    "drizzle",
-    "zustand",
-    "mysql",
-    "lucide-react",
-    "clerk-themes",
-    "clerk",
-    "postcss",
-    "prettier",
-    "react-dom",
-    "tailwindcss",
-    "tailwindcss-animate",
-    "ui/ux",
-    "js",
-    "javascript",
-    "typescript",
-    "eslint",
-    "html",
-    "css"
+    "Tłı̨chǫ",
+    "language-learning",
+    "FSRS",
+    "Next.js"
   ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sanidhyy/duolingo-clone.git"
-  },
-  "homepage": "https://github.com/sanidhyy/duolingo-clone#readme",
-  "bugs": {
-    "url": "https://github.com/sanidhyy/duolingo-clone/issues",
-    "email": "sanidhyyy@gmail.com"
-  },
-  "funding": [
-    {
-      "type": "patreon",
-      "url": "https://www.patreon.com/sanidhy"
-    },
-    {
-      "type": "Buy me a coffee",
-      "url": "https://www.buymeacoffee.com/sanidhy"
-    }
-  ]
+  "license": "MIT"
 }

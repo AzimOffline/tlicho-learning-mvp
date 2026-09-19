@@ -1,0 +1,1464 @@
+[
+  {
+    "id": "tlicho-e4763213d5725bf2",
+    "term": "ts'edǫ",
+    "definition": "drink",
+    "part_of_speech": "V",
+    "example_tlicho": "Libò wet'à lıdı̀ ts'edǫ.",
+    "example_english": "We drink tea from a mug.",
+    "topic": "Food and Eating - General Activities",
+    "audio_url": "https://dictionary.tlicho.biz/media/5529.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5529.1.mp3",
+      "https://dictionary.tlicho.biz/media/5529.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-331755188a05c9de",
+    "term": "ts'eɂà",
+    "definition": "eat",
+    "part_of_speech": "V",
+    "example_tlicho": "Etsı̨̀ı̨lı̨ı̨ wet'à tııwoo ts'eɂà.",
+    "example_english": "We eat soup with a spoon.",
+    "topic": "Food and Eating - General Activities",
+    "audio_url": "https://dictionary.tlicho.biz/media/5497.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5497.1.mp3",
+      "https://dictionary.tlicho.biz/media/5497.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-588df62e9053ba7a",
+    "term": "ade",
+    "definition": "be; get to be (situation); happen; occur; go; do; come",
+    "part_of_speech": "V",
+    "example_tlicho": "Zhah łǫ ade ha.",
+    "example_english": "There will be lots of snow.",
+    "topic": "Time - General Activities -",
+    "audio_url": "https://dictionary.tlicho.biz/media/46.2.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/46.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-4a6bcd034f8256c7",
+    "term": "ats'ede",
+    "definition": "go; do",
+    "part_of_speech": "V",
+    "example_tlicho": "Dàht'e nı̨dè ąde ha?",
+    "example_english": "When are you going?",
+    "topic": null,
+    "audio_url": "https://dictionary.tlicho.biz/media/2743.2.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2743.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-c37a90b64cd29c42",
+    "term": "la",
+    "definition": "work; job",
+    "part_of_speech": "N",
+    "example_tlicho": "Behtsı̨ı̨̀ t'à la ts'ǫ̀ naı̨dà nı̀?",
+    "example_english": "Do you go to work by car?",
+    "topic": "General Activities - Community and Culture",
+    "audio_url": "https://dictionary.tlicho.biz/media/3038.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3038.1.mp3",
+      "https://dictionary.tlicho.biz/media/3038.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-c391e5f1911f336d",
+    "term": "ts'etı̨",
+    "definition": "sleep (singular)",
+    "part_of_speech": "V",
+    "example_tlicho": "Ehtsèe whetı̨.",
+    "example_english": "Grandpa is sleeping.",
+    "topic": "General Activities -",
+    "audio_url": "https://dictionary.tlicho.biz/media/9186.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/9186.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-f97aa3d94da5d867",
+    "term": "dats'eechı",
+    "definition": "touch; grab; take; catch",
+    "part_of_speech": "V",
+    "example_tlicho": "Daı̨chı-le.",
+    "example_english": "Don't touch it.",
+    "topic": "General Activities -",
+    "audio_url": "https://dictionary.tlicho.biz/media/336.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/336.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-9b4e21078f596c57",
+    "term": "ts'ehtsı̨",
+    "definition": "make; fabricate",
+    "part_of_speech": "V",
+    "example_tlicho": "Lorı lıdı̀ ehtsı̨ ha.",
+    "example_english": "Lori is going to make tea.",
+    "topic": "General Activities",
+    "audio_url": "https://dictionary.tlicho.biz/media/5643.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5643.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-457cdef02ee9119d",
+    "term": "sǫnàdè",
+    "definition": "play (plural); have fun (plural)",
+    "part_of_speech": "V",
+    "example_tlicho": "Dǫ sǫnàdè.",
+    "example_english": "The people are having fun.",
+    "topic": "Music, Games and Playing - Community and Culture",
+    "audio_url": "https://dictionary.tlicho.biz/media/4047.2.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4047.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-5f240539e6d59f58",
+    "term": "wets'ǫdaàkàts'eechı",
+    "definition": "open; remove a cap; take out a stopper",
+    "part_of_speech": "V",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "General Activities -",
+    "audio_url": "https://dictionary.tlicho.biz/media/9285.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/9285.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-b5b0f08fc257b09e",
+    "term": "dedı̀ı",
+    "definition": "moose",
+    "part_of_speech": "N",
+    "example_tlicho": "Dedı̀ gıaɂı̨.",
+    "example_english": "They saw a moose.",
+    "topic": "Living Creatures",
+    "audio_url": "https://dictionary.tlicho.biz/media/442.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/442.1.mp3",
+      "https://dictionary.tlicho.biz/media/442.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-99b690f455da66bd",
+    "term": "chı̨ą",
+    "definition": "bird",
+    "part_of_speech": "N",
+    "example_tlicho": "Chı̨ą yàedı.",
+    "example_english": "Birds are singing.",
+    "topic": "Living Creatures",
+    "audio_url": "https://dictionary.tlicho.biz/media/225.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/225.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-53a971f2f9e9b777",
+    "term": "tłı̨",
+    "definition": "dog",
+    "part_of_speech": "N",
+    "example_tlicho": "Tłı̨ daı̨gè.",
+    "example_english": "He untied the dog.",
+    "topic": "Living Creatures",
+    "audio_url": "https://dictionary.tlicho.biz/media/4488.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4488.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-74c72d35b15e8bec",
+    "term": "dı̀ga",
+    "definition": "wolf",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Living Creatures",
+    "audio_url": "https://dictionary.tlicho.biz/media/753.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/753.1.mp3",
+      "https://dictionary.tlicho.biz/media/753.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-160890d920955fbc",
+    "term": "gah",
+    "definition": "rabbit",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Living Creatures",
+    "audio_url": "https://dictionary.tlicho.biz/media/1676.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1676.1.mp3",
+      "https://dictionary.tlicho.biz/media/1676.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-abeb234ec19df0ec",
+    "term": "det'ǫ",
+    "definition": "duck",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Living Creatures",
+    "audio_url": "https://dictionary.tlicho.biz/media/569.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/569.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-c7c85fb1d32388c3",
+    "term": "ekwǫ̀",
+    "definition": "caribou",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Living Creatures",
+    "audio_url": "https://dictionary.tlicho.biz/media/1323.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1323.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-9dce55673b4e8139",
+    "term": "sah",
+    "definition": "bear; black bear",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Living Creatures",
+    "audio_url": "https://dictionary.tlicho.biz/media/3905.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3905.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-bf317d75fbc48440",
+    "term": "godaà",
+    "definition": "eye; eyesight; presence",
+    "part_of_speech": "N",
+    "example_tlicho": "Wedaà nezı̨ dı̀è.",
+    "example_english": "Her eyesight is very good.",
+    "topic": "Body and Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/1724.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1724.1.mp3",
+      "https://dictionary.tlicho.biz/media/1724.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-9cf10c3d92735d76",
+    "term": "gokè",
+    "definition": "foot; foot measure",
+    "part_of_speech": "N",
+    "example_tlicho": "Sekè eya.",
+    "example_english": "My feet are sore.",
+    "topic": "Body and Health; Numbers and Amounts -",
+    "audio_url": "https://dictionary.tlicho.biz/media/1920.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1920.1.mp3",
+      "https://dictionary.tlicho.biz/media/2318.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-521e25a111ef736b",
+    "term": "gokw'ǫǫ̀",
+    "definition": "bone; leg; corpse; body",
+    "part_of_speech": "N",
+    "example_tlicho": "Nekw'ǫǫ̀ t'à nekǫ̀ ts'ǫ̀ naı̨dà nı̀?",
+    "example_english": "Do you go home on foot?",
+    "topic": "Body and Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/1990.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1990.1.mp3",
+      "https://dictionary.tlicho.biz/media/1990.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-aab99267876d37a3",
+    "term": "gokwı̀",
+    "definition": "head",
+    "part_of_speech": "N",
+    "example_tlicho": "Whaà gots'ǫ sekwı̀ eya.",
+    "example_english": "I've had a headache for a long time.",
+    "topic": "Body and Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/5242.2.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5242.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-be3387361973349b",
+    "term": "goı̨ghǫ̀",
+    "definition": "nose",
+    "part_of_speech": "N",
+    "example_tlicho": "Wı̨ghǫ̀ ts'ǫ wedoò at'ı̨.",
+    "example_english": "He has a nose-bleed.",
+    "topic": "Body And Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/1867.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1867.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-8b67e94f005fac5e",
+    "term": "eya",
+    "definition": "sore; sick; aching; hurt",
+    "part_of_speech": "ADJ",
+    "example_tlicho": "Sek'à eya.",
+    "example_english": "I have a sore throat.",
+    "topic": "Body And Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/1625.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1625.1.mp3",
+      "https://dictionary.tlicho.biz/media/1625.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-d8d143e92a8b002a",
+    "term": "nèts'ı̨ı̨tsǫ",
+    "definition": "be tired",
+    "part_of_speech": "V",
+    "example_tlicho": "Nènęętsǫ.",
+    "example_english": "You are tired.",
+    "topic": "General Activities - Body And Health -",
+    "audio_url": "https://dictionary.tlicho.biz/media/8989.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/8989.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-157b5cbaf9b6d143",
+    "term": "gowalıı̀",
+    "definition": "tongue",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Body and Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/2119.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2119.1.mp3",
+      "https://dictionary.tlicho.biz/media/2119.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-ccfdef6b1cd1a9fb",
+    "term": "goghòò",
+    "definition": "tooth",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Body and Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/1828.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1828.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-d307fe095234cb8d",
+    "term": "jıh",
+    "definition": "mitt",
+    "part_of_speech": "N",
+    "example_tlicho": "Jıh gehtsı̨.",
+    "example_english": "They make mitts.",
+    "topic": "Clothing And Footwear -",
+    "audio_url": "https://dictionary.tlicho.biz/media/2483.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2483.1.mp3",
+      "https://dictionary.tlicho.biz/media/2483.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-ab707ca76f89ab96",
+    "term": "ɂehdı̀a",
+    "definition": "jacket",
+    "part_of_speech": "N",
+    "example_tlicho": "Ɂehdı̀a hı̨ gehtsı̨",
+    "example_english": "They also make jackets.",
+    "topic": "Clothing and Footwear",
+    "audio_url": "https://dictionary.tlicho.biz/media/8099.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/8099.1.mp3",
+      "https://dictionary.tlicho.biz/media/8099.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-ccd339846f12ad0e",
+    "term": "dechı̨ke",
+    "definition": "boots; footwear",
+    "part_of_speech": "N",
+    "example_tlicho": "wedechı̨kè",
+    "example_english": "his/her boots",
+    "topic": "Clothing And Footwear -",
+    "audio_url": "https://dictionary.tlicho.biz/media/419.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/419.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-144c001df77b5f72",
+    "term": "kw'ı̨hɂeh",
+    "definition": "shirt; blouse",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Clothing and Footwear",
+    "audio_url": "https://dictionary.tlicho.biz/media/3030.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3030.1.mp3",
+      "https://dictionary.tlicho.biz/media/3030.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-a3ef9b3c717d6349",
+    "term": "ke",
+    "definition": "moccasin; slipper; shoe",
+    "part_of_speech": "N",
+    "example_tlicho": null,
+    "example_english": null,
+    "topic": "Clothing and Footwear",
+    "audio_url": "https://dictionary.tlicho.biz/media/2546.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2546.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-382a5558a7ed23c0",
+    "term": "amı̀ı",
+    "definition": "who?; whose?; which person?",
+    "part_of_speech": "N",
+    "example_tlicho": "Amı̀ı nekǫ̀ geèhkw'ı?",
+    "example_english": "Who is at your house?",
+    "topic": "Questions - People",
+    "audio_url": "https://dictionary.tlicho.biz/media/86.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/86.1.mp3",
+      "https://dictionary.tlicho.biz/media/86.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-9d56a88309a5b3ac",
+    "term": "ayı̀ı",
+    "definition": "what",
+    "part_of_speech": "N",
+    "example_tlicho": "Ayı̀ı t'aa nàı̨lı?",
+    "example_english": "What did you sew?",
+    "topic": "Descriptive Words - Communication and Speaking",
+    "audio_url": "https://dictionary.tlicho.biz/media/126.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/126.1.mp3",
+      "https://dictionary.tlicho.biz/media/126.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-d92d3780b8764f87",
+    "term": "dàht'e",
+    "definition": "when?",
+    "part_of_speech": "ADV",
+    "example_tlicho": "Dàht'e dè nǫǫtła ha?",
+    "example_english": "When will he be back?",
+    "topic": "Time - Questions",
+    "audio_url": "https://dictionary.tlicho.biz/media/366.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/366.1.mp3",
+      "https://dictionary.tlicho.biz/media/366.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-474119559b15caab",
+    "term": "edı̨ı̨̀",
+    "definition": "where; what time",
+    "part_of_speech": "ADV",
+    "example_tlicho": "Edı̨ı̨̀ ts'ǫ̀ elı̨Ɂ",
+    "example_english": "Where is s/he?",
+    "topic": "Time - Land and Places",
+    "audio_url": "https://dictionary.tlicho.biz/media/1003.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1003.1.mp3",
+      "https://dictionary.tlicho.biz/media/1003.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-99b0cc4d3f944cfb",
+    "term": "nı̨dè",
+    "definition": "if; when; while; whenever; in case",
+    "part_of_speech": "CONJ",
+    "example_tlicho": "Edaèk'ǫ agot'ı̨̀ nı̨dè, xah łǫ nǫedè.",
+    "example_english": "When spring comes, lots of geese return.",
+    "topic": "Time - Communication and Speaking",
+    "audio_url": "https://dictionary.tlicho.biz/media/3672.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3672.1.mp3",
+      "https://dictionary.tlicho.biz/media/615.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-337f846e85b41ac0",
+    "term": "ı̨̀le",
+    "definition": "no",
+    "part_of_speech": "Phrase",
+    "example_tlicho": "Į̀le, nàèdı k'èezǫǫ dııdzęę̀ k'e wheda-le.",
+    "example_english": "No, the doctor is not in today.",
+    "topic": "Expressions - Communication And Speaking -",
+    "audio_url": "https://dictionary.tlicho.biz/media/9766.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/9766.1.mp3",
+      "https://dictionary.tlicho.biz/media/9766.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-59feaf143d1da2af",
+    "term": "ayı̀ı gha",
+    "definition": "why?",
+    "part_of_speech": "PP",
+    "example_tlicho": "Ayı̀ı gha Sǫǫ̀mbak'è nǫ̀ǫdà?",
+    "example_english": "Why did you go to Yellowknife?",
+    "topic": "Questions",
+    "audio_url": "https://dictionary.tlicho.biz/media/127.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/127.1.mp3",
+      "https://dictionary.tlicho.biz/media/127.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-264daacda716531e",
+    "term": "hęɂę",
+    "definition": "Expression of agreement or understanding; yes",
+    "part_of_speech": "E",
+    "example_tlicho": "Hęɂę, eyi nı̨htł'èkǫ̀ awèehsı̨.",
+    "example_english": "Yes, I mean that school.",
+    "topic": "Expressions - Communication And Speaking -",
+    "audio_url": "https://dictionary.tlicho.biz/media/2274.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2274.1.mp3",
+      "https://dictionary.tlicho.biz/media/2274.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-556f234f11444784",
+    "term": "ı̨dèe",
+    "definition": "back; rear; behind",
+    "part_of_speech": "N",
+    "example_tlicho": "Yaàzea ı̨dèe nàwo.",
+    "example_english": "He stood back a little.",
+    "topic": "Descriptive Words - Relationships Between Things",
+    "audio_url": "https://dictionary.tlicho.biz/media/2357.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2357.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-6cfee614edf97c88",
+    "term": "netsà",
+    "definition": "be big; be large",
+    "part_of_speech": "V",
+    "example_tlicho": "Tàhtsıı̀ netsà.",
+    "example_english": "The snowdrift is big.",
+    "topic": "Descriptive Words",
+    "audio_url": "https://dictionary.tlicho.biz/media/3626.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3626.1.mp3",
+      "https://dictionary.tlicho.biz/media/3626.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-0bcf49c38a8b89e2",
+    "term": "dek'o",
+    "definition": "be red",
+    "part_of_speech": "V",
+    "example_tlicho": "Ɂeh dek'o.",
+    "example_english": "The jacket is red.",
+    "topic": "Descriptive Words",
+    "audio_url": "https://dictionary.tlicho.biz/media/549.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/549.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-89082d438ef575dd",
+    "term": "dekwo",
+    "definition": "be yellow",
+    "part_of_speech": "V",
+    "example_tlicho": "Sets'òò dekwo.",
+    "example_english": "My blanket is yellow.",
+    "topic": "Descriptive Words",
+    "audio_url": "https://dictionary.tlicho.biz/media/555.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/555.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-7c4aa576b21b299a",
+    "term": "dezǫ",
+    "definition": "be black; be dark",
+    "part_of_speech": "V",
+    "example_tlicho": "dèhtł'èe dezǫǫ",
+    "example_english": "navy blue/purple",
+    "topic": "Descriptive Words",
+    "audio_url": "https://dictionary.tlicho.biz/media/650.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/650.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-07283a98bcf85856",
+    "term": "dèhtł'è",
+    "definition": "be blue",
+    "part_of_speech": "V",
+    "example_tlicho": "Weɂeè dèhtł'è.",
+    "example_english": "Her coat is blue.",
+    "topic": "Descriptive Words",
+    "audio_url": "https://dictionary.tlicho.biz/media/703.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/703.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-ec000a22f7ac3fdf",
+    "term": "wek'aàchı̨ı̨̀",
+    "definition": "colour",
+    "part_of_speech": "N",
+    "example_tlicho": "Wek'aàchı̨ı̨̀ dàòt'ı̨ ne?",
+    "example_english": "What is its colour?",
+    "topic": "Descriptive Words -",
+    "audio_url": "https://dictionary.tlicho.biz/media/9230.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/9230.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-3704a6ea070ddbd8",
+    "term": "zǫ",
+    "definition": "just; only; always",
+    "part_of_speech": "ADV",
+    "example_tlicho": "Ehts'oo zǫ t'à nàɂegeelı.",
+    "example_english": "They only do beading.",
+    "topic": "Descriptive Words",
+    "audio_url": "https://dictionary.tlicho.biz/media/5861.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5861.1.mp3",
+      "https://dictionary.tlicho.biz/media/5861.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-c3b53977296c78b3",
+    "term": "gomǫ",
+    "definition": "mother; mom",
+    "part_of_speech": "N",
+    "example_tlicho": "Ası̨̀ı̨̀ nurse semǫ ts'àtła ha esanı̀le, wekǫ̀?",
+    "example_english": "Will the nurse visit my mother at home?",
+    "topic": "Family - People",
+    "audio_url": "https://dictionary.tlicho.biz/media/2023.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2023.1.mp3",
+      "https://dictionary.tlicho.biz/media/2023.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-e141e04fbf3bfaa0",
+    "term": "gotà",
+    "definition": "father",
+    "part_of_speech": "N",
+    "example_tlicho": "Ası̨̀ı̨̀ netà wheda?",
+    "example_english": "Is your dad home?",
+    "topic": "Family - People",
+    "audio_url": "https://dictionary.tlicho.biz/media/2053.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2053.1.mp3",
+      "https://dictionary.tlicho.biz/media/2053.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-255701ef2e8fa404",
+    "term": "goza",
+    "definition": "son; child",
+    "part_of_speech": "N",
+    "example_tlicho": "Neza dàtłǫ?",
+    "example_english": "How many children do you have?",
+    "topic": "Family - People",
+    "audio_url": "https://dictionary.tlicho.biz/media/2163.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2163.1.mp3",
+      "https://dictionary.tlicho.biz/media/2163.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-c7a06aa4a6d04d95",
+    "term": "tsekaa",
+    "definition": "child; children",
+    "part_of_speech": "N",
+    "example_tlicho": "Edı̨ı̨̀ seè tsekaa nı̨htł'èkǫ̀ aget'ı̨ ne?",
+    "example_english": "Where is the school that the children go to?",
+    "topic": "People",
+    "audio_url": "https://dictionary.tlicho.biz/media/4615.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4615.1.mp3",
+      "https://dictionary.tlicho.biz/media/4615.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-453007c7ba459783",
+    "term": "ts'eɂı̨̀",
+    "definition": "see; meet; visit",
+    "part_of_speech": "V",
+    "example_tlicho": "Įxę̀ę weehɂı̨.",
+    "example_english": "Yesterday I saw her.",
+    "topic": "General Activities - People",
+    "audio_url": "https://dictionary.tlicho.biz/media/5498.2.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5498.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-56e3177180fe7bde",
+    "term": "gòet'ı̨ı̨̀",
+    "definition": "family; relatives; cousins",
+    "part_of_speech": "N",
+    "example_tlicho": "Sèet'ı̨ı̨̀ hı̨ ekǫǫ̀ nàgedè.",
+    "example_english": "My relatives live there too.",
+    "topic": "Family - People",
+    "audio_url": "https://dictionary.tlicho.biz/media/2189.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2189.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-8a8501e15f52d37c",
+    "term": "t'eekoa",
+    "definition": "girl",
+    "part_of_speech": "N",
+    "example_tlicho": "Dıı̀ sı̀ı t'eeka łǫ ehts'oo t'à nàɂegeelı.",
+    "example_english": "Nowadays lots of girls do beading.",
+    "topic": "People",
+    "audio_url": "https://dictionary.tlicho.biz/media/4448.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4448.1.mp3",
+      "https://dictionary.tlicho.biz/media/4448.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-94b166bc0be5b3df",
+    "term": "àgı̨ą",
+    "definition": "friend; my friend",
+    "part_of_speech": "N",
+    "example_tlicho": "Àgı̨ą, sek'èı̨tła.",
+    "example_english": "Come with me, my friend.",
+    "topic": "People",
+    "audio_url": "https://dictionary.tlicho.biz/media/132.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/132.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-ac5383bc8e525135",
+    "term": "cheko ghàehtǫǫ dǫǫ̀",
+    "definition": "teacher",
+    "part_of_speech": "N",
+    "example_tlicho": "Cheko ghàehtǫǫ dǫǫ̀ ełegeèhdı̀.",
+    "example_english": "The teachers are in a meeting.",
+    "topic": "People",
+    "audio_url": "https://dictionary.tlicho.biz/media/203.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/203.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-66ac4ed83f9c5ba5",
+    "term": "dǫ",
+    "definition": "person; human; man; people; Dene people; someone",
+    "part_of_speech": "N",
+    "example_tlicho": "Dıı̀ dǫ łǫ ts'oh t'à nàɂegeelı-le.",
+    "example_english": "Nowadays lots of people don't sew with quills.",
+    "topic": "People",
+    "audio_url": "https://dictionary.tlicho.biz/media/763.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/763.1.mp3",
+      "https://dictionary.tlicho.biz/media/763.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-a83524decbb70b04",
+    "term": "bò",
+    "definition": "meat",
+    "part_of_speech": "N",
+    "example_tlicho": "Beh netsàa wet'à bò sıı̀gehɂı̨.",
+    "example_english": "They prepare meat with a big knife.",
+    "topic": "Food and Eating",
+    "audio_url": "https://dictionary.tlicho.biz/media/186.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/186.1.mp3",
+      "https://dictionary.tlicho.biz/media/186.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-b8afc4b0acccf20e",
+    "term": "eyè",
+    "definition": "egg",
+    "part_of_speech": "N",
+    "example_tlicho": "eyè nı̨̀le",
+    "example_english": "it lays eggs",
+    "topic": "Food and Eating",
+    "audio_url": "https://dictionary.tlicho.biz/media/1636.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1636.1.mp3",
+      "https://dictionary.tlicho.biz/media/9179.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-05379e0ee7613d1a",
+    "term": "jı̀ek'otı̀",
+    "definition": "orange pop; juice",
+    "part_of_speech": "N",
+    "example_tlicho": "Tı hanı̀-le dè jı̀ek'otı̀.",
+    "example_english": "Water or juice.",
+    "topic": "Food and Eating",
+    "audio_url": "https://dictionary.tlicho.biz/media/2500.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2500.1.mp3",
+      "https://dictionary.tlicho.biz/media/2256.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-bcc43b2a54a86c27",
+    "term": "lıdı̀",
+    "definition": "tea",
+    "part_of_speech": "N",
+    "example_tlicho": "Lıdı̀ whekǫ̀.",
+    "example_english": "The tea is hot.",
+    "topic": "Food and Eating",
+    "audio_url": "https://dictionary.tlicho.biz/media/3085.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3085.1.mp3",
+      "https://dictionary.tlicho.biz/media/3085.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-eb827199ebac89ce",
+    "term": "lı̀gahwhı̀",
+    "definition": "coffee",
+    "part_of_speech": "N",
+    "example_tlicho": "Lıbò wet'à lı̀gahwhı̀ ts'edǫ.",
+    "example_english": "We drink coffee from a mug.",
+    "topic": "Food and Eating",
+    "audio_url": "https://dictionary.tlicho.biz/media/3116.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3116.1.mp3",
+      "https://dictionary.tlicho.biz/media/3116.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-eb760d94bdad8770",
+    "term": "tı",
+    "definition": "water; lake; liquid",
+    "part_of_speech": "N",
+    "example_tlicho": "Lıbò wet'à tı ts'edǫ.",
+    "example_english": "We drink water from a cup.",
+    "topic": "Fire and Water - Land and Places",
+    "audio_url": "https://dictionary.tlicho.biz/media/4274.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4274.1.mp3",
+      "https://dictionary.tlicho.biz/media/4274.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-fb11a8111be704a2",
+    "term": "tııwoo",
+    "definition": "soup; broth",
+    "part_of_speech": "N",
+    "example_tlicho": "Tııwoo whekǫ̀.",
+    "example_english": "The soup is hot.",
+    "topic": "Food and Eating",
+    "audio_url": "https://dictionary.tlicho.biz/media/4313.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4313.1.mp3",
+      "https://dictionary.tlicho.biz/media/4313.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-6b3a38f484b7166d",
+    "term": "weghǫ sèts'ezee",
+    "definition": "food; groceries",
+    "part_of_speech": "N",
+    "example_tlicho": "Kw'àtǫǫ̀ yı̀ı, kw'à, lıbò, weghǫ sègeze weyı̀ı whela.",
+    "example_english": "In the grub box there are dishes, cups and groceries.",
+    "topic": "Food and Eating",
+    "audio_url": "https://dictionary.tlicho.biz/media/3006.2.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3006.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-ded4efa509b3c035",
+    "term": "daèhchı̨",
+    "definition": "chair; seat",
+    "part_of_speech": "N",
+    "example_tlicho": "Daèhchı̨ k'e wheęda.",
+    "example_english": "Sit on the chair.",
+    "topic": "Shelter and Building",
+    "audio_url": "https://dictionary.tlicho.biz/media/268.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/268.1.mp3",
+      "https://dictionary.tlicho.biz/media/268.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-2f83f8648ca9db24",
+    "term": "daèhte",
+    "definition": "bed",
+    "part_of_speech": "N",
+    "example_tlicho": "Daèhte k'e whetı̨.",
+    "example_english": "He is sleeping on the bed.",
+    "topic": "Shelter and Building",
+    "audio_url": "https://dictionary.tlicho.biz/media/271.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/271.1.mp3",
+      "https://dictionary.tlicho.biz/media/271.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-f046f63bacc104f8",
+    "term": "gokǫ̀",
+    "definition": "home; our house",
+    "part_of_speech": "N",
+    "example_tlicho": "Nekǫ̀ ts'ǫ gǫǫwà nı̀?",
+    "example_english": "Is your house far away?",
+    "topic": "Shelter and Building",
+    "audio_url": "https://dictionary.tlicho.biz/media/1923.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1923.1.mp3",
+      "https://dictionary.tlicho.biz/media/1923.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-500fb44af6c72617",
+    "term": "kǫ̀",
+    "definition": "house; building; town",
+    "part_of_speech": "N",
+    "example_tlicho": "Behtsı̨ı̨̀ t'à nekǫ̀ ts'ǫ̀ naı̨dà nı̀?",
+    "example_english": "Do you go home by vehicle?",
+    "topic": "Shelter and Building",
+    "audio_url": "https://dictionary.tlicho.biz/media/2591.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2591.1.mp3",
+      "https://dictionary.tlicho.biz/media/2591.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-53757f3d6a07516e",
+    "term": "ladà",
+    "definition": "table; desk",
+    "part_of_speech": "N",
+    "example_tlicho": "Ladà k'e sèts'eze.",
+    "example_english": "We eat at the table.",
+    "topic": "Shelter and Building",
+    "audio_url": "https://dictionary.tlicho.biz/media/3040.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3040.1.mp3",
+      "https://dictionary.tlicho.biz/media/3040.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-4b21182bb503c7ca",
+    "term": "kw'àyı̨̀ą",
+    "definition": "bowl",
+    "part_of_speech": "N",
+    "example_tlicho": "Kw'àyı̨̀ą wet'à tııwoo ts'eɂà.",
+    "example_english": "We eat soup from a bowl.",
+    "topic": "Tools and Equipment - Food and Eating",
+    "audio_url": "https://dictionary.tlicho.biz/media/3014.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3014.1.mp3",
+      "https://dictionary.tlicho.biz/media/3014.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-ef439bc8151d3468",
+    "term": "lıbò",
+    "definition": "cup",
+    "part_of_speech": "N",
+    "example_tlicho": "Lıbò wedets'eedı",
+    "example_english": "We wipe the mugs.",
+    "topic": "Food And Eating -",
+    "audio_url": "https://dictionary.tlicho.biz/media/3078.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3078.1.mp3",
+      "https://dictionary.tlicho.biz/media/3078.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-ad09a1eb539ee13d",
+    "term": "gogha nezı̨",
+    "definition": "like",
+    "part_of_speech": "V",
+    "example_tlicho": "Lahsıı̀ nàehłı segha nezı̨.",
+    "example_english": "I like sewing embroidery.",
+    "topic": "Mind and Spirit",
+    "audio_url": "https://dictionary.tlicho.biz/media/8795.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/8795.1.mp3",
+      "https://dictionary.tlicho.biz/media/8795.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-cb74cfe14b8b3ecc",
+    "term": "k'èts'eezǫ",
+    "definition": "know; have knowledge",
+    "part_of_speech": "V",
+    "example_tlicho": "Ası̨̀ı̨̀ wı̨zı̀ k'èhǫǫzǫ?",
+    "example_english": "Do you know his/her name?",
+    "topic": "Mind and Spirit",
+    "audio_url": "https://dictionary.tlicho.biz/media/1858.2.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1858.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-a46d657d554adaee",
+    "term": "wets'ı̨ı̨wǫ",
+    "definition": "want; desire",
+    "part_of_speech": "V",
+    "example_tlicho": "Neehwhǫ.",
+    "example_english": "I desire you.",
+    "topic": "Mind and Spirit",
+    "audio_url": "https://dictionary.tlicho.biz/media/5712.2.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5712.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-aed24a085389a9c5",
+    "term": "dehko",
+    "definition": "cough; cold; phlegm",
+    "part_of_speech": "N",
+    "example_tlicho": "Dàwhaà ts'ǫ dıı dehko anı̨̀hwhǫ?",
+    "example_english": "How long did you have this cold?",
+    "topic": "Body and Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/512.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/512.1.mp3",
+      "https://dictionary.tlicho.biz/media/512.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-2db321cd8d175e75",
+    "term": "dzę",
+    "definition": "day; daylight; light; brightness",
+    "part_of_speech": "N",
+    "example_tlicho": "ayı̀ı dzę?",
+    "example_english": "what day?",
+    "topic": "Time - Sky And Weather -",
+    "audio_url": "https://dictionary.tlicho.biz/media/875.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/875.1.mp3",
+      "https://dictionary.tlicho.biz/media/875.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-996cf48b87a8f4fb",
+    "term": "nı̨hts'ı",
+    "definition": "wind; breeze; air",
+    "part_of_speech": "N",
+    "example_tlicho": "Nı̨hts'ı whek'ò.",
+    "example_english": "The wind is cool.",
+    "topic": "Sky And Weather - Body And Health -",
+    "audio_url": "https://dictionary.tlicho.biz/media/3684.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3684.1.mp3",
+      "https://dictionary.tlicho.biz/media/3684.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-0681f6684055bfcf",
+    "term": "tsǫ",
+    "definition": "rain",
+    "part_of_speech": "N",
+    "example_tlicho": "Tsǫ nedàa hodàetł'ı̀.",
+    "example_english": "Heavy rain is falling.",
+    "topic": "Sky and Weather",
+    "audio_url": "https://dictionary.tlicho.biz/media/4683.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4683.1.mp3",
+      "https://dictionary.tlicho.biz/media/4683.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-8e264d9a6b2e3729",
+    "term": "zah",
+    "definition": "snow",
+    "part_of_speech": "N",
+    "example_tlicho": "Tǫ k'e zah detǫ dı̀ı̀.",
+    "example_english": "The snow is really thick on the ice.",
+    "topic": "Sky and Weather",
+    "audio_url": "https://dictionary.tlicho.biz/media/5828.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5828.1.mp3",
+      "https://dictionary.tlicho.biz/media/5828.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-4fe9eb4f61181dc6",
+    "term": "adzęzah",
+    "definition": "moon",
+    "part_of_speech": "N",
+    "example_tlicho": "Adzęzah daaɂa.",
+    "example_english": "The moon is shining.",
+    "topic": "Sky and Weather",
+    "audio_url": "https://dictionary.tlicho.biz/media/52.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/52.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-5045cda4db316145",
+    "term": "k'oh",
+    "definition": "cloud",
+    "part_of_speech": "N",
+    "example_tlicho": "K'oh gǫ̀hłı̨.",
+    "example_english": "It is cloudy.",
+    "topic": "Sky and Weather",
+    "audio_url": "https://dictionary.tlicho.biz/media/2817.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2817.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-11a911c95c4e8065",
+    "term": "sa",
+    "definition": "month; moon",
+    "part_of_speech": "N",
+    "example_tlicho": "ı̨łè sa",
+    "example_english": "one month",
+    "topic": "Time - Sky and Weather",
+    "audio_url": "https://dictionary.tlicho.biz/media/3876.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3876.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-71ee55c172d34e38",
+    "term": "wek'enaɂets'ehtse",
+    "definition": "wash; launder; bathe; clean",
+    "part_of_speech": "V",
+    "example_tlicho": "Netsıa k'enaɂı̨htse.",
+    "example_english": "Give your little brother a bath.",
+    "topic": "General Activities - Fire And Water -",
+    "audio_url": "https://dictionary.tlicho.biz/media/9240.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/9240.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-224f9c7d4a010121",
+    "term": "dı̨",
+    "definition": "four",
+    "part_of_speech": "QT",
+    "example_tlicho": "Dǫ dı̨ nenakweè èhkw'ı.",
+    "example_english": "There are four people ahead of you.",
+    "topic": "Numbers and Amounts",
+    "audio_url": "https://dictionary.tlicho.biz/media/746.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/746.1.mp3",
+      "https://dictionary.tlicho.biz/media/746.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-dd16a52acb8d1fbb",
+    "term": "ek'ètaı",
+    "definition": "six",
+    "part_of_speech": "QT",
+    "example_tlicho": "elàzoa dǫne ek'ètaı weyı̀ekw'ıı",
+    "example_english": "6-person canoe",
+    "topic": "Numbers and Amounts",
+    "audio_url": "https://dictionary.tlicho.biz/media/1300.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/1300.1.mp3",
+      "https://dictionary.tlicho.biz/media/1300.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-22de42d5b53fe3bf",
+    "term": "nàke",
+    "definition": "two",
+    "part_of_speech": "QT",
+    "example_tlicho": "Elàzoa dǫne nàke weyı̀ekw'ıı",
+    "example_english": "2-person canoe",
+    "topic": "Numbers and Amounts",
+    "audio_url": "https://dictionary.tlicho.biz/media/3542.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3542.1.mp3",
+      "https://dictionary.tlicho.biz/media/3542.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-2fff517222dcc3c2",
+    "term": "taı",
+    "definition": "three",
+    "part_of_speech": "QT",
+    "example_tlicho": "Įdaa taı dzęę̀ ts'ǫ̀ wheda ha-le.",
+    "example_english": "S/he won't be here for three days.",
+    "topic": "Numbers and Amounts",
+    "audio_url": "https://dictionary.tlicho.biz/media/4130.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4130.1.mp3",
+      "https://dictionary.tlicho.biz/media/4130.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-cb16821aaceedef5",
+    "term": "ı̨łè",
+    "definition": "one; a",
+    "part_of_speech": "QT",
+    "example_tlicho": "Įłè ghǫ nı̀ı̨ɂǫ dè dzǫ nǫǫtła nǫǫ̀.",
+    "example_english": "Come back at one o'clock.",
+    "topic": "Numbers and Amounts",
+    "audio_url": "https://dictionary.tlicho.biz/media/2416.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2416.1.mp3",
+      "https://dictionary.tlicho.biz/media/2416.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-7f8374629e3eae73",
+    "term": "łǫǫ̀tǫ",
+    "definition": "nine",
+    "part_of_speech": "QT",
+    "example_tlicho": "lı̀balà elà łǫǫ̀tǫ gokè",
+    "example_english": "9-foot canvas boat",
+    "topic": "Numbers and Amounts",
+    "audio_url": "https://dictionary.tlicho.biz/media/3225.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3225.1.mp3",
+      "https://dictionary.tlicho.biz/media/3109.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-17ae7963915dce81",
+    "term": "dıı dzęę̀",
+    "definition": "today",
+    "part_of_speech": "N",
+    "example_tlicho": "Dııdzęę̀ k'e dzǫ wheda-le.",
+    "example_english": "He is not here today.",
+    "topic": "Time",
+    "audio_url": "https://dictionary.tlicho.biz/media/722.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/722.1.mp3",
+      "https://dictionary.tlicho.biz/media/722.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-99a870ad44f8c3d8",
+    "term": "k'omǫǫ̀dǫǫ̀",
+    "definition": "morning",
+    "part_of_speech": "N",
+    "example_tlicho": "K'omǫǫ̀dǫǫ̀ nıèhtła ha segha hoezı̀.",
+    "example_english": "It's hard for me to get up in the morning.",
+    "topic": "Time - Sky And Weather",
+    "audio_url": "https://dictionary.tlicho.biz/media/2822.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2822.1.mp3",
+      "https://dictionary.tlicho.biz/media/2822.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-34574b32d79b2a62",
+    "term": "xo",
+    "definition": "year; winter",
+    "part_of_speech": "N",
+    "example_tlicho": "taı xo",
+    "example_english": "three years",
+    "topic": "Time",
+    "audio_url": "https://dictionary.tlicho.biz/media/5406.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/5406.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-99e58edec2e2878d",
+    "term": "dè",
+    "definition": "land; ground; dirt; earth",
+    "part_of_speech": "N",
+    "example_tlicho": "Dè ghǫ nàyatı.",
+    "example_english": "There is a land claim meeting.",
+    "topic": "Land and Places",
+    "audio_url": "https://dictionary.tlicho.biz/media/656.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/656.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-a45e6d59a6084c53",
+    "term": "dıı nèk'e",
+    "definition": "world; earth",
+    "part_of_speech": "PP",
+    "example_tlicho": "dıı nèk'e",
+    "example_english": "in this world",
+    "topic": "Land and Places",
+    "audio_url": "https://dictionary.tlicho.biz/media/726.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/726.1.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-3a70432106b3e4cb",
+    "term": "kǫ̀ta",
+    "definition": "town; among the houses",
+    "part_of_speech": "N",
+    "example_tlicho": "Ehtsı̨ kǫ̀ta goɂı̨-le.",
+    "example_english": "Granny doesn't visit around town.",
+    "topic": "Shelter and Building - Land and Places - Community and Culture",
+    "audio_url": "https://dictionary.tlicho.biz/media/2633.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/2633.1.mp3",
+      "https://dictionary.tlicho.biz/media/2633.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-e944a1ba2b46c96c",
+    "term": "nàèdı k'èezǫǫ kǫ̀",
+    "definition": "clinic; nursing station; hospital",
+    "part_of_speech": "N",
+    "example_tlicho": "Nàèdı k'èezǫǫ kǫ̀ nàhtła ha.",
+    "example_english": "I'm going to the clinic.",
+    "topic": "Shelter and Building - Body and Health",
+    "audio_url": "https://dictionary.tlicho.biz/media/3500.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/3500.1.mp3",
+      "https://dictionary.tlicho.biz/media/3500.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-17c58e321214baa4",
+    "term": "tı̨lı",
+    "definition": "road; path; trail",
+    "part_of_speech": "N",
+    "example_tlicho": "Tı̨lı k'è zah łǫ.",
+    "example_english": "There's lots of snow on the road.",
+    "topic": "Land and Places - Travel",
+    "audio_url": "https://dictionary.tlicho.biz/media/4336.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/4336.1.mp3",
+      "https://dictionary.tlicho.biz/media/4336.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  },
+  {
+    "id": "tlicho-3520cf3198ccf945",
+    "term": "dzǫ",
+    "definition": "here",
+    "part_of_speech": "ADV",
+    "example_tlicho": "Dzǫ Behchokǫ̀ ası̀ı łǫ whela-le.",
+    "example_english": "There aren't lots of things here in Behchoko.",
+    "topic": "Land and Places - Relationships Between Things",
+    "audio_url": "https://dictionary.tlicho.biz/media/921.1.mp3",
+    "audio_urls": [
+      "https://dictionary.tlicho.biz/media/921.1.mp3",
+      "https://dictionary.tlicho.biz/media/921.2.mp3"
+    ],
+    "source_url": "https://dictionary.tlicho.biz/users/mainview.aspx"
+  }
+]

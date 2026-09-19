@@ -36,9 +36,9 @@ export const Card = ({
   const handleClick = useCallback(() => {
     if (disabled) return;
 
-    void controls.play();
+    if (audioSrc) void controls.play();
     onClick();
-  }, [disabled, onClick, controls]);
+  }, [audioSrc, disabled, onClick, controls]);
 
   useKey(shortcut, handleClick, {}, [handleClick]);
 
