@@ -18,6 +18,11 @@ export default defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    "android/**",
+    "mobile/.next/**",
+    "mobile/out/**",
+    "mobile/public/**",
+    "mobile/postcss.config.js",
     "next-env.d.ts",
   ]),
 ]);

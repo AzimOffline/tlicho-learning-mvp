@@ -8,6 +8,9 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
+    "mobile:build": "node scripts/build-mobile-web.mjs",
+    "mobile:sync": "capacitor sync android",
+    "android:apk": "node scripts/build-android-apk.mjs",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
@@ -22,6 +25,8 @@
     "db:seed:tlicho": "tsx ./scripts/seed-tlicho.ts"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
     "@clerk/nextjs": "^7.8.0",
     "@neondatabase/serverless": "^1.1.0",
     "@radix-ui/react-avatar": "^1.2.6",
@@ -50,6 +55,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.2",
     "@types/node": "^26.2.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.2.7",

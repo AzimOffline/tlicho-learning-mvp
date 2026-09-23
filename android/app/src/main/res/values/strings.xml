@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Tłı̨chǫ Learning</string>
+    <string name="title_activity_main">Tłı̨chǫ Learning</string>
+    <string name="package_name">ca.tlicho.learning</string>
+    <string name="custom_url_scheme">ca.tlicho.learning</string>
+</resources>

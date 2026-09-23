@@ -14,6 +14,11 @@
 # next.js
 /.next/
 /out/
+/mobile/.next/
+/mobile/out/
+/mobile/public/
+/.mobile-tools/
+/dist/
 
 # production
 /build

@@ -42,6 +42,16 @@ Pronunciation is always tap-to-play and missing/broken files degrade to an unava
 
 Completing a Learn challenge makes that vocabulary item eligible for Practice. The self-contained scheduler lives in `lib/fsrs`; its short portability guide is in `lib/fsrs/README.md`. Practice uses multiple choice only and automatically maps incorrect answers to Again and correct answers to Good—there are no learner-facing grading buttons or typed answers. Set `PRACTICE_SESSION_SIZE` to 1–30 (default 10).
 
+## Android APK
+
+The Android project wraps the offline local demo with Capacitor. It requires Android SDK 36 and Java 21. Build a debug APK with:
+
+```powershell
+pnpm android:apk
+```
+
+The command rebuilds the static mobile bundle, synchronizes it into `android/`, compiles the native project, and writes `dist/Tlicho-Learning-debug.apk`. This debug build can be installed privately for testing; a Play Store release still requires a private signing key and release configuration.
+
 ## Checks
 
 ```sh
