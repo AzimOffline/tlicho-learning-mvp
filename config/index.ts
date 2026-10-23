@@ -4,11 +4,12 @@ import { getMetadataBase } from "@/lib/site-url";
 export const siteConfig: Metadata = {
   metadataBase: getMetadataBase(process.env.NEXT_PUBLIC_APP_URL),
   title: {
-    default: "Tłı̨chǫ Learning",
-    template: "%s | Tłı̨chǫ Learning",
+    default: "Learn Tlicho (Tłı̨chǫ) — Words, Meanings & Practice",
+    template: "%s | Learn Tłı̨chǫ",
   },
   description:
     "Learn Tłı̨chǫ vocabulary through short lessons and personalized practice.",
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION || undefined },
   keywords: [
     "Tłı̨chǫ",
     "language learning",

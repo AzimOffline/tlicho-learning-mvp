@@ -8,9 +8,11 @@ import { filterWords, type LibraryWord } from "@/lib/word-library";
 export const WordLibrary = ({
   vocabulary,
   stickyOffset = "top-0",
+  title = "Words",
 }: {
   vocabulary: LibraryWord[];
   stickyOffset?: string;
+  title?: string;
 }) => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
@@ -27,7 +29,7 @@ export const WordLibrary = ({
   return (
     <section aria-labelledby="words-title">
       <h1 id="words-title" className="text-3xl font-extrabold text-sky-950">
-        Words
+        {title}
       </h1>
       <p className="mt-2 text-slate-600">
         Browse the learning collection, hear pronunciation, and explore
@@ -72,7 +74,11 @@ export const WordLibrary = ({
       )}
       <ul className="divide-y divide-sky-100 overflow-hidden rounded-2xl border border-sky-100 bg-white">
         {words.map((word) => (
-          <li key={word.id} className="flex items-start gap-3 px-4 py-3">
+          <li
+            id={"word-" + word.id}
+            key={word.id}
+            className="flex items-start gap-3 px-4 py-3"
+          >
             <details className="group min-w-0 flex-1">
               <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 [&::-webkit-details-marker]:hidden">
                 <span className="min-w-0 flex-1">
