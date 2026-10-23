@@ -16,6 +16,8 @@ export default defineConfig([
   globalIgnores([
     "node_modules/**",
     ".next/**",
+    ".open-next/**",
+    ".wrangler/**",
     "out/**",
     "build/**",
     "android/**",

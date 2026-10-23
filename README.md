@@ -93,3 +93,14 @@ For deployment, set `NEXT_PUBLIC_APP_URL=https://learntlicho.ca`. Production met
 ## About & support
 
 The public `/about` page is linked from Profile in the demo and signed-in app, and is included in the Android web bundle. It invites feedback and educational/community partnerships; it does not collect payments. Email enquiries default to `support@peakhop.app`. Set `NEXT_PUBLIC_SUPPORT_EMAIL` to override the public project email. When explicitly blank, the page uses prefilled public GitHub issues and explains their visibility. Rebuild deployed web/mobile bundles after changing this setting.
+
+## Cloudflare deployment
+
+The production site uses the `tlicho-learning-mvp` Worker on `learntlicho.ca`. Its OpenNext adapter, bindings, and custom domain are defined in `open-next.config.ts` and `wrangler.jsonc`.
+
+```sh
+pnpm build:cloudflare
+pnpm exec opennextjs-cloudflare deploy
+```
+
+Or run `pnpm deploy` to build and deploy together after `pnpm exec wrangler login`. For Cloudflare Workers Builds, use `pnpm build:cloudflare` as the build command and `pnpm exec opennextjs-cloudflare deploy` as the deploy command. Set public environment variables before building; this deployment retains the free, browser-local demo when Clerk is not configured. Generated `.open-next` and `.wrangler` files are ignored.

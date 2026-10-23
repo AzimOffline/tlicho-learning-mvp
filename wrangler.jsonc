@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tlicho-learning-mvp",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-18",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [
+    { "binding": "WORKER_SELF_REFERENCE", "service": "tlicho-learning-mvp" }
+  ],
+  "images": { "binding": "IMAGES" },
+  "observability": { "enabled": true },
+  "routes": [{ "pattern": "learntlicho.ca", "custom_domain": true }]
+}
