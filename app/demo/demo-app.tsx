@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { ContinueLearning } from "@/components/continue-learning";
 import { CollapsibleUnit } from "@/components/collapsible-unit";
 import { WordLibrary } from "@/components/word-library";
+import { AboutSupportCard } from "@/components/about-support-card";
 import { seededRandom } from "@/lib/answer-choices";
 import {
   buildPracticeActivity,
@@ -1390,6 +1391,7 @@ export const DemoApp = ({
               No sign-in is required. Progress and review schedules stay in this
               browser and are not synced to other devices.
             </div>
+            <AboutSupportCard />
             <Button
               className="mt-5 w-full"
               variant="dangerOutline"

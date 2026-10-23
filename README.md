@@ -89,3 +89,7 @@ For deployment, set `NEXT_PUBLIC_APP_URL=https://learntlicho.ca`. Production met
 - Dictionary audio availability and redistribution rights are not guaranteed.
 - Streak days use UTC boundaries in this MVP.
 - Stripe/shop code remains for compatibility but is hidden from primary navigation.
+
+## About & support
+
+The public `/about` page is linked from Profile in the demo and signed-in app, and is included in the Android web bundle. It invites feedback and educational/community partnerships; it does not collect payments. Email enquiries default to `support@peakhop.app`. Set `NEXT_PUBLIC_SUPPORT_EMAIL` to override the public project email. When explicitly blank, the page uses prefilled public GitHub issues and explains their visibility. Rebuild deployed web/mobile bundles after changing this setting.

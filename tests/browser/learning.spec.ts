@@ -123,14 +123,12 @@ test("compact words expand with the keyboard and keep audio separate", async ({
   page,
 }) => {
   await page.goto("/words");
-  const row = page
-    .locator("li")
-    .filter({
-      has: page.getByRole("heading", {
-        name: vocabulary[0].tlicho,
-        exact: true,
-      }),
-    });
+  const row = page.locator("li").filter({
+    has: page.getByRole("heading", {
+      name: vocabulary[0].tlicho,
+      exact: true,
+    }),
+  });
   const details = row.locator("details");
   await expect(details).not.toHaveAttribute("open");
   await expect(
@@ -238,4 +236,39 @@ test("word library is accessible without lessons and supports search and empty s
       () => document.documentElement.scrollWidth <= window.innerWidth
     )
   ).toBe(true);
+});
+
+test("profile links to public about and support without payments", async ({
+  page,
+}) => {
+  await page.goto("/demo");
+  await page
+    .getByRole("button", { name: "Profile", exact: true })
+    .last()
+    .click();
+  await page.getByRole("link", { name: "About & support" }).click();
+  await expect(
+    page.getByRole("heading", { name: "About & support", exact: true })
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Send feedback" })
+  ).toHaveAttribute("href", /^mailto:support@peakhop\.app\?subject=/);
+  await expect(
+    page.getByRole("link", { name: "Discuss a partnership" })
+  ).toHaveAttribute("href", /^mailto:support@peakhop\.app\?subject=/);
+  await expect(page.getByText(/These links open your email app/)).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /donate|payment|subscribe/i })
+  ).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth
+    )
+  ).toBe(true);
+  await page.screenshot({
+    path: "test-results/about-mobile.png",
+    fullPage: true,
+  });
+  await page.getByRole("link", { name: "Back to learning" }).click();
+  await expect(page).toHaveURL(/\/demo$/);
 });
