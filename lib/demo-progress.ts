@@ -6,7 +6,55 @@ export type StoredCard = Omit<FsrsCard, "due" | "lastReview"> & {
   lastReview?: string;
 };
 
+export type LessonSession = {
+  lessonId: string;
+  itemIds: string[];
+  index: number;
+  seed: string;
+  selectedId?: string;
+  result?: "correct" | "incorrect";
+};
+
+export const validateLessonSession = (
+  value: unknown
+): LessonSession | undefined => {
+  if (
+    !isRecord(value) ||
+    typeof value.lessonId !== "string" ||
+    typeof value.seed !== "string" ||
+    !value.seed ||
+    !Array.isArray(value.itemIds) ||
+    !value.itemIds.length ||
+    !value.itemIds.every((id) => typeof id === "string") ||
+    typeof value.index !== "number" ||
+    !Number.isInteger(value.index) ||
+    value.index < 0 ||
+    value.index >= value.itemIds.length ||
+    (value.result !== undefined &&
+      value.result !== "correct" &&
+      value.result !== "incorrect") ||
+    (value.selectedId !== undefined && typeof value.selectedId !== "string") ||
+    (value.result !== undefined && typeof value.selectedId !== "string")
+  )
+    return undefined;
+  return value as LessonSession;
+};
+
+export const resumeLessonSession = (
+  session: LessonSession | undefined,
+  lessons: { id: string; items: { id: string }[] }[]
+) => {
+  if (!session) return undefined;
+  const lesson = lessons.find((lesson) => lesson.id === session.lessonId);
+  return lesson &&
+    lesson.items.length === session.itemIds.length &&
+    lesson.items.every((item, index) => item.id === session.itemIds[index])
+    ? session
+    : undefined;
+};
+
 export type DemoProgressState = {
+  lessonSession?: LessonSession;
   version: 2;
   xp: number;
   hearts: number;
@@ -98,6 +146,7 @@ export const parseStoredDemoProgress = (raw: string): DemoProgressState => {
 
     return {
       version: 2,
+      lessonSession: validateLessonSession(parsed.lessonSession),
       xp: nonNegativeInteger(parsed.xp),
       hearts: Math.min(
         MAX_HEARTS,

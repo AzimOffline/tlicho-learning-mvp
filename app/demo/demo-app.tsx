@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   BarChart3,
   BookOpen,
+  Library,
   Check,
   Clock3,
   Crown,
@@ -25,18 +26,24 @@ import Link from "next/link";
 import { useAudio } from "react-use";
 import { toast } from "sonner";
 
+import { ContinueLearning } from "@/components/continue-learning";
+import { CollapsibleUnit } from "@/components/collapsible-unit";
+import { WordLibrary } from "@/components/word-library";
+import { AboutSupportCard } from "@/components/about-support-card";
+import { seededRandom } from "@/lib/answer-choices";
+import {
+  buildPracticeActivity,
+  type PracticeActivity,
+} from "@/lib/practice-activities";
 import { ActivityPrompt } from "@/components/activity-prompt";
 import { Button } from "@/components/ui/button";
 import { MAX_HEARTS } from "@/constants";
-import {
-  getActivityCompanion,
-  type ActivityCompanion,
-} from "@/lib/activity-companions";
 import { createFsrsCard, reviewFsrsCard, type FsrsCard } from "@/lib/fsrs";
 import {
   DEMO_PROGRESS_STORAGE_KEY,
   initialDemoProgressState,
   parseStoredDemoProgress,
+  resumeLessonSession,
   type DemoProgressState,
   type StoredCard,
 } from "@/lib/demo-progress";
@@ -59,22 +66,12 @@ export type DemoVocabularyItem = {
   partOfSpeech: string | null;
   exampleTlicho: string | null;
   exampleEnglish: string | null;
+  sourceUrl?: string | null;
 };
 
-type Tab = "learn" | "practice" | "progress" | "profile";
+type Tab = "learn" | "practice" | "words" | "progress" | "profile";
 
-type Activity = {
-  itemId: string;
-  instruction: string;
-  focusText: string | null;
-  focusLanguage: "Tłı̨chǫ" | "English" | "Audio";
-  answerLanguage: "Tłı̨chǫ" | "English";
-  companion: ActivityCompanion;
-  promptAudioSrc: string | null;
-  revealAudioAfterAnswer: boolean;
-  translationAfterAnswer: string | null;
-  options: { id: string; text: string; correct: boolean }[];
-};
+type Activity = PracticeActivity;
 
 type PracticeQueueItem = {
   itemId: string;
@@ -143,77 +140,6 @@ const buildUnits = (items: DemoVocabularyItem[]): Unit[] => {
   });
 };
 
-const selectChoices = (
-  item: DemoVocabularyItem,
-  allItems: DemoVocabularyItem[],
-  field: "tlicho" | "english",
-  offset: number
-) => {
-  const choices = [item];
-  const seen = new Set([item[field]]);
-  const start = Math.max(
-    0,
-    allItems.findIndex(({ id }) => id === item.id)
-  );
-
-  for (let step = 1; choices.length < 4 && step <= allItems.length; step++) {
-    const candidate = allItems[(start + step) % allItems.length];
-    if (!seen.has(candidate[field])) {
-      seen.add(candidate[field]);
-      choices.push(candidate);
-    }
-  }
-
-  const correct = choices.shift();
-  if (correct) choices.splice(offset % (choices.length + 1), 0, correct);
-  return choices;
-};
-
-const buildActivity = (
-  item: DemoVocabularyItem,
-  allItems: DemoVocabularyItem[],
-  sequence: number
-): Activity => {
-  const requestedMode = sequence % 4;
-  const mode = item.audioSrc ? requestedMode : requestedMode % 2;
-  const answerInEnglish = mode === 0 || mode === 2;
-  const choices = selectChoices(
-    item,
-    allItems,
-    answerInEnglish ? "english" : "tlicho",
-    sequence
-  );
-  const instruction =
-    mode === 0
-      ? "Choose the English meaning"
-      : mode === 1
-        ? "Choose the Tłı̨chǫ translation"
-        : mode === 2
-          ? "Listen, then choose the English meaning"
-          : "Listen, then choose the Tłı̨chǫ word";
-
-  const focusText = mode === 0 ? item.tlicho : mode === 1 ? item.english : null;
-  const focusLanguage =
-    mode === 0 ? "Tłı̨chǫ" : mode === 1 ? "English" : "Audio";
-
-  return {
-    itemId: item.id,
-    instruction,
-    focusText,
-    focusLanguage,
-    answerLanguage: answerInEnglish ? "English" : "Tłı̨chǫ",
-    companion: getActivityCompanion(`${item.id}:${sequence}`),
-    promptAudioSrc: item.audioSrc,
-    revealAudioAfterAnswer: mode === 1,
-    translationAfterAnswer: mode === 3 ? item.english : null,
-    options: choices.map((choice) => ({
-      id: choice.id,
-      text: answerInEnglish ? choice.english : choice.tlicho,
-      correct: choice.id === item.id,
-    })),
-  };
-};
-
 const AnswerGrid = ({
   activity,
   selectedId,
@@ -236,6 +162,7 @@ const AnswerGrid = ({
           key={`${option.id}-${optionIndex}`}
           disabled={!!result}
           onClick={() => onSelect(option.id)}
+          aria-pressed={selected}
           className={cn(
             "flex min-h-16 items-center justify-between rounded-2xl border-2 border-b-4 p-3 text-left text-sm font-bold text-neutral-700 transition hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-200 active:border-b-2 sm:min-h-20 sm:p-4 sm:text-base",
             selected && "border-sky-400 bg-sky-50 text-sky-700",
@@ -392,10 +319,10 @@ const LessonPath = ({
 }) => {
   const style = unitStyles[unitIndex % unitStyles.length];
   const rowHeight = 150;
-  const pathHeight = unit.lessons.length * rowHeight + 78;
+  const pathHeight = unit.lessons.length * rowHeight + 110;
   const points = unit.lessons.map((_, index) => ({
     x: pathOffsets[index % pathOffsets.length],
-    y: 62 + index * rowHeight,
+    y: 94 + index * rowHeight,
   }));
   const path = points
     .map((point, index) => {
@@ -410,30 +337,14 @@ const LessonPath = ({
   ).length;
 
   return (
-    <section className="overflow-hidden rounded-[1.75rem] border border-sky-100 bg-white/90 shadow-[0_18px_45px_-34px_rgba(8,47,73,0.55)]">
-      <div
-        className={cn(
-          "flex items-center justify-between bg-gradient-to-r p-5 text-white sm:p-6",
-          style.banner
-        )}
-      >
-        <div>
-          <p className="text-sm font-extrabold uppercase tracking-wider text-white/80">
-            Unit {unitIndex + 1}
-          </p>
-          <h2 className="mt-1 text-2xl font-extrabold">{unit.title}</h2>
-          <p className="mt-1 text-sm font-semibold text-white/85">
-            {unit.description}
-          </p>
-        </div>
-        <div className="rounded-2xl bg-white/20 px-3 py-2 text-center backdrop-blur-sm">
-          <strong className="block text-xl">{completedCount}</strong>
-          <span className="text-xs font-bold uppercase">
-            of {unit.lessons.length}
-          </span>
-        </div>
-      </div>
-
+    <CollapsibleUnit
+      title={unit.title}
+      description={unit.description}
+      number={unitIndex + 1}
+      completed={completedCount}
+      total={unit.lessons.length}
+      current={unit.lessons.some((lesson) => lesson.id === currentLessonId)}
+    >
       <div
         className="relative mx-auto w-full max-w-xl"
         style={{ height: pathHeight }}
@@ -530,7 +441,7 @@ const LessonPath = ({
           );
         })}
       </div>
-    </section>
+    </CollapsibleUnit>
   );
 };
 
@@ -556,7 +467,9 @@ export const DemoApp = ({
   const [tab, setTab] = useState<Tab>("learn");
   const [nowMs, setNowMs] = useState(0);
   const [activeLesson, setActiveLesson] = useState<Lesson>();
-  const [quizIndex, setQuizIndex] = useState(0);
+  const quizIndex = state.lessonSession?.index ?? 0;
+  const [storageFailed, setStorageFailed] = useState(false);
+  const [practiceSeed, setPracticeSeed] = useState("");
   const [selectedId, setSelectedId] = useState<string>();
   const [result, setResult] = useState<"correct" | "incorrect">();
   const [practiceQueue, setPracticeQueue] = useState<PracticeQueueItem[]>([]);
@@ -576,22 +489,40 @@ export const DemoApp = ({
     try {
       const stored = localStorage.getItem(DEMO_PROGRESS_STORAGE_KEY);
       if (stored) {
+        const restored = parseStoredDemoProgress(stored);
+        restored.lessonSession = resumeLessonSession(
+          restored.lessonSession,
+          units.flatMap((unit) => unit.lessons)
+        );
+        // Restore browser-owned state after hydration.
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        setState(parseStoredDemoProgress(stored));
+        setState(restored);
+        if (restored.lessonSession) {
+          setActiveLesson(
+            units
+              .flatMap((unit) => unit.lessons)
+              .find((lesson) => lesson.id === restored.lessonSession?.lessonId)
+          );
+          setSelectedId(restored.lessonSession.selectedId);
+          setResult(restored.lessonSession.result);
+        }
       }
     } catch {
-      // Storage can be unavailable in private or restricted browsing contexts.
+      setStorageFailed(true);
     }
     setReady(true);
     setNowMs(Date.now());
-  }, []);
+  }, [units]);
 
   useEffect(() => {
     if (!ready) return;
     try {
       localStorage.setItem(DEMO_PROGRESS_STORAGE_KEY, JSON.stringify(state));
+      // Report the outcome of the external storage write.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setStorageFailed(false);
     } catch {
-      // Keep the current session usable when storage is unavailable or full.
+      setStorageFailed(true);
     }
   }, [ready, state]);
 
@@ -647,6 +578,7 @@ export const DemoApp = ({
     if (!sessionCards.length) return;
 
     setNowMs(currentTime);
+    setPracticeSeed(crypto.randomUUID());
     setPracticeQueue(
       sessionCards.map((card, sessionIndex) => ({
         itemId: card.itemId,
@@ -663,9 +595,16 @@ export const DemoApp = ({
       return;
     }
     setActiveLesson(lesson);
-    setQuizIndex(0);
-    setSelectedId(undefined);
-    setResult(undefined);
+    const saved = resumeLessonSession(state.lessonSession, [lesson]);
+    const session = saved ?? {
+      lessonId: lesson.id,
+      itemIds: lesson.items.map((item) => item.id),
+      index: 0,
+      seed: crypto.randomUUID(),
+    };
+    setState((current) => ({ ...current, lessonSession: session }));
+    setSelectedId(saved?.selectedId);
+    setResult(saved?.result);
   };
 
   const resetProgress = () => {
@@ -690,7 +629,14 @@ export const DemoApp = ({
   };
 
   const activity = activeLesson
-    ? buildActivity(activeLesson.items[quizIndex], courseVocabulary, quizIndex)
+    ? buildPracticeActivity(
+        activeLesson.items[quizIndex],
+        courseVocabulary,
+        quizIndex,
+        seededRandom(
+          `${state.lessonSession?.seed}:${activeLesson.items[quizIndex].id}:${quizIndex}`
+        )
+      )
     : undefined;
 
   const checkLessonAnswer = () => {
@@ -705,6 +651,9 @@ export const DemoApp = ({
       setState((current) => ({
         ...current,
         hearts: Math.max(0, current.hearts - 1),
+        lessonSession: current.lessonSession
+          ? { ...current.lessonSession, selectedId, result: "incorrect" }
+          : undefined,
         encountered: current.encountered.includes(activity.itemId)
           ? current.encountered
           : [...current.encountered, activity.itemId],
@@ -725,6 +674,9 @@ export const DemoApp = ({
     setState((current) => ({
       ...current,
       xp: current.xp + 10,
+      lessonSession: current.lessonSession
+        ? { ...current.lessonSession, selectedId, result: "correct" }
+        : undefined,
       encountered: current.encountered.includes(activity.itemId)
         ? current.encountered
         : [...current.encountered, activity.itemId],
@@ -742,13 +694,33 @@ export const DemoApp = ({
   const continueLesson = () => {
     if (!activeLesson || !result) return;
     if (result === "incorrect") {
+      setState((current) => ({
+        ...current,
+        lessonSession: current.lessonSession
+          ? {
+              ...current.lessonSession,
+              selectedId: undefined,
+              result: undefined,
+            }
+          : undefined,
+      }));
       setSelectedId(undefined);
       setResult(undefined);
       return;
     }
 
     if (quizIndex < activeLesson.items.length - 1) {
-      setQuizIndex((current) => current + 1);
+      setState((current) => ({
+        ...current,
+        lessonSession: current.lessonSession
+          ? {
+              ...current.lessonSession,
+              index: current.lessonSession.index + 1,
+              selectedId: undefined,
+              result: undefined,
+            }
+          : undefined,
+      }));
       setSelectedId(undefined);
       setResult(undefined);
       return;
@@ -759,6 +731,7 @@ export const DemoApp = ({
       ...current,
       ...updateStreak(current, completedAt),
       xp: current.xp + 20,
+      lessonSession: undefined,
       completedLessons: current.completedLessons.includes(activeLesson.id)
         ? current.completedLessons
         : [...current.completedLessons, activeLesson.id],
@@ -767,7 +740,6 @@ export const DemoApp = ({
     showReward("Lesson complete!", "+20 XP · streak updated");
     toast.success("Lesson complete — new words are ready for Practice.");
     setActiveLesson(undefined);
-    setQuizIndex(0);
     setSelectedId(undefined);
     setResult(undefined);
   };
@@ -780,10 +752,13 @@ export const DemoApp = ({
   const practiceItem = courseVocabulary.find(({ id }) => id === practiceItemId);
   const practiceActivity =
     practiceCard && practiceItem && practiceQueueItem
-      ? buildActivity(
+      ? buildPracticeActivity(
           practiceItem,
           courseVocabulary,
-          practiceQueueItem.sequence
+          practiceQueueItem.sequence,
+          seededRandom(
+            `${practiceSeed}:${practiceItem.id}:${practiceQueueItem.sequence}`
+          )
         )
       : undefined;
 
@@ -856,6 +831,7 @@ export const DemoApp = ({
   const navItems = [
     { id: "learn" as const, label: "Learn", icon: BookOpen },
     { id: "practice" as const, label: "Practice", icon: Dumbbell },
+    { id: "words" as const, label: "Words", icon: Library },
     { id: "progress" as const, label: "Progress", icon: BarChart3 },
     { id: "profile" as const, label: "Profile", icon: UserRound },
   ];
@@ -866,6 +842,17 @@ export const DemoApp = ({
     !!practiceActivity &&
     !!practiceCard;
   const focusedSession = lessonInProgress || practiceInProgress;
+  const nextLesson = units
+    .flatMap((unit) => unit.lessons)
+    .find(
+      (lesson) =>
+        lesson.id === (state.lessonSession?.lessonId ?? currentLessonId)
+    );
+  const remaining = nextLesson
+    ? nextLesson.items.length -
+      (state.lessonSession?.index ?? 0) -
+      (state.lessonSession?.result === "correct" ? 1 : 0)
+    : 0;
 
   return (
     <div
@@ -896,6 +883,7 @@ export const DemoApp = ({
               key={id}
               type="button"
               onClick={() => openTab(id)}
+              aria-current={tab === id ? "page" : undefined}
               className={cn(
                 "flex h-[52px] items-center gap-4 rounded-xl px-4 font-bold text-neutral-500 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-200",
                 tab === id && "bg-sky-100 text-sky-800"
@@ -947,6 +935,34 @@ export const DemoApp = ({
             : "max-w-4xl px-5 py-3 sm:py-8"
         )}
       >
+        {storageFailed && (
+          <div
+            role="alert"
+            className="mb-4 rounded-2xl border-2 border-amber-300 bg-amber-50 p-4 text-amber-950"
+          >
+            <p>
+              Your progress could not be saved in this browser. Keep this page
+              open to avoid losing this session.
+            </p>
+            <Button
+              variant="primaryOutline"
+              className="mt-2"
+              onClick={() => {
+                try {
+                  localStorage.setItem(
+                    DEMO_PROGRESS_STORAGE_KEY,
+                    JSON.stringify(state)
+                  );
+                  setStorageFailed(false);
+                } catch {
+                  setStorageFailed(true);
+                }
+              }}
+            >
+              Retry saving
+            </Button>
+          </div>
+        )}
         {tab === "learn" && activeLesson && state.hearts === 0 ? (
           <section className="mx-auto flex min-h-[calc(100svh-2rem)] max-w-xl items-center justify-center sm:min-h-[calc(100svh-4rem)]">
             <div className="w-full rounded-3xl border-2 border-rose-100 bg-white p-7 text-center shadow-sm sm:p-10">
@@ -1005,6 +1021,9 @@ export const DemoApp = ({
             </div>
             <div className="mt-4 rounded-3xl border-2 bg-white p-4 shadow-sm sm:mt-6 sm:p-6 lg:p-10">
               <ActivityPrompt
+                key={`lesson:${activity.itemId}:${quizIndex}`}
+                fallbackText={activity.fallbackText}
+                fallbackLanguage={activity.fallbackLanguage}
                 eyebrow="Learn"
                 instruction={activity.instruction}
                 focusText={activity.focusText}
@@ -1066,6 +1085,48 @@ export const DemoApp = ({
           </section>
         ) : tab === "learn" ? (
           <section className="mx-auto max-w-3xl">
+            <ContinueLearning
+              title={
+                state.hearts === 0
+                  ? "Ready for a little practice?"
+                  : (nextLesson?.title ?? "You’ve completed the trail!")
+              }
+              detail={
+                state.hearts === 0
+                  ? "Restore your hearts, then pick up your lesson where you left off."
+                  : nextLesson
+                    ? state.lessonSession
+                      ? "Your place is saved. Continue from question " +
+                        (state.lessonSession.index + 1) +
+                        " of " +
+                        nextLesson.items.length +
+                        "."
+                      : nextLesson.items.length +
+                        " short activities · build your vocabulary one word at a time."
+                    : "Keep your words fresh with a review session."
+              }
+              minutes={
+                nextLesson && state.hearts > 0
+                  ? Math.max(1, Math.ceil(remaining * 0.5))
+                  : undefined
+              }
+            >
+              <Button
+                size="lg"
+                variant="primary"
+                onClick={() =>
+                  state.hearts === 0 || !nextLesson
+                    ? openTab("practice")
+                    : beginLesson(nextLesson)
+                }
+              >
+                {state.hearts === 0
+                  ? "Practice to refill"
+                  : nextLesson
+                    ? "Continue learning"
+                    : "Go to Practice"}
+              </Button>
+            </ContinueLearning>
             <div className="relative min-h-56 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#07559a] via-[#087cae] to-[#1aa6a6] p-7 pr-28 text-white shadow-[0_24px_60px_-38px_rgba(3,105,161,0.9)] sm:min-h-64 sm:p-9 sm:pr-52">
               <div className="absolute -bottom-16 -right-12 h-52 w-52 rounded-full bg-white/10 sm:h-72 sm:w-72" />
               <p className="font-bold text-sky-100">Your learning trail</p>
@@ -1110,10 +1171,10 @@ export const DemoApp = ({
                 </Button>
               </div>
             )}
-            <div className="mt-8 space-y-10">
+            <div className="mt-6 space-y-3">
               {units.map((unit, unitIndex) => (
                 <LessonPath
-                  key={unit.title}
+                  key={`${unit.title}:${currentLessonId}`}
                   unit={unit}
                   unitIndex={unitIndex}
                   completedLessons={state.completedLessons}
@@ -1141,6 +1202,9 @@ export const DemoApp = ({
             </div>
             <div className="mt-3 rounded-3xl border-2 bg-white p-4 shadow-sm sm:mt-5 sm:p-6 lg:p-10">
               <ActivityPrompt
+                key={`practice:${practiceActivity.itemId}:${practiceQueueItem?.sequence}`}
+                fallbackText={practiceActivity.fallbackText}
+                fallbackLanguage={practiceActivity.fallbackLanguage}
                 eyebrow="Scheduled practice"
                 instruction={practiceActivity.instruction}
                 focusText={practiceActivity.focusText}
@@ -1264,6 +1328,11 @@ export const DemoApp = ({
               )}
             </div>
           </section>
+        ) : tab === "words" ? (
+          <WordLibrary
+            vocabulary={vocabulary}
+            stickyOffset="top-16 sm:top-20"
+          />
         ) : tab === "progress" ? (
           <section>
             <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-sky-600">
@@ -1313,13 +1382,16 @@ export const DemoApp = ({
                 Your learning profile
               </h1>
               <p className="mt-2 text-neutral-500">
-                Progress saved on this device
+                {storageFailed
+                  ? "Progress is not saved"
+                  : "Progress saved in this browser"}
               </p>
             </div>
             <div className="mt-5 rounded-2xl bg-amber-50 p-5 text-amber-900">
               No sign-in is required. Progress and review schedules stay in this
               browser and are not synced to other devices.
             </div>
+            <AboutSupportCard />
             <Button
               className="mt-5 w-full"
               variant="dangerOutline"
@@ -1338,7 +1410,7 @@ export const DemoApp = ({
 
       <nav
         className={cn(
-          "fixed inset-x-0 bottom-0 z-30 h-16 grid-cols-4 border-t border-sky-100 bg-white/95 px-2 backdrop-blur-xl sm:h-20 lg:hidden",
+          "fixed inset-x-0 bottom-0 z-30 h-16 grid-cols-5 border-t border-sky-100 bg-white/95 px-2 backdrop-blur-xl sm:h-20 lg:hidden",
           focusedSession ? "hidden" : "grid"
         )}
       >
@@ -1347,6 +1419,7 @@ export const DemoApp = ({
             type="button"
             key={id}
             onClick={() => openTab(id)}
+            aria-current={tab === id ? "page" : undefined}
             className={cn(
               "flex flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-neutral-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-sky-200 sm:gap-1 sm:text-xs",
               tab === id && "text-sky-800"

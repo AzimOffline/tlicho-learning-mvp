@@ -1,8 +1,7 @@
 import { lessons, units } from "@/db/schema";
-import { tlichoUnitDefinitions } from "@/lib/tlicho-course-structure";
 
 import { LessonButton } from "./lesson-button";
-import { UnitBanner } from "./unit-banner";
+import { CollapsibleUnit } from "@/components/collapsible-unit";
 
 type UnitProps = {
   id: number;
@@ -30,17 +29,15 @@ export const Unit = ({
   activeLessonPercentage,
   heartsDepleted,
 }: UnitProps) => {
-  const companion =
-    tlichoUnitDefinitions[(order - 1) % tlichoUnitDefinitions.length];
-
   return (
-    <>
-      <UnitBanner
-        title={title}
-        description={description}
-        companionSrc={companion.companionSrc}
-      />
-
+    <CollapsibleUnit
+      title={title}
+      description={description}
+      number={order}
+      completed={lessons.filter((lesson) => lesson.completed).length}
+      total={lessons.length}
+      current={lessons.some((lesson) => lesson.id === activeLesson?.id)}
+    >
       <div className="relative flex flex-col items-center">
         {lessons.map((lesson, i) => {
           const isCurrent = lesson.id === activeLesson?.id;
@@ -59,6 +56,6 @@ export const Unit = ({
           );
         })}
       </div>
-    </>
+    </CollapsibleUnit>
   );
 };

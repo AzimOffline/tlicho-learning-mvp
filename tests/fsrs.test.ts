@@ -179,11 +179,11 @@ describe("reusable FSRS scheduler", () => {
     assert.match(demoUi, /sequence: state\.reviewsCompleted \+ sessionIndex/);
     assert.match(
       demoUi,
-      /buildActivity\(\s*practiceItem,\s*courseVocabulary,\s*practiceQueueItem\.sequence\s*\)/
+      /buildPracticeActivity\(\s*practiceItem,\s*courseVocabulary,\s*practiceQueueItem\.sequence,\s*seededRandom\(/
     );
     assert.doesNotMatch(
       demoUi,
-      /buildActivity\(practiceItem, vocabulary, practiceCard\.reps\)/
+      /buildPracticeActivity\(practiceItem, vocabulary, practiceCard\.reps\)/
     );
   });
 

@@ -200,6 +200,9 @@ export const PracticeSession = ({
 
         <section className="mt-3 rounded-3xl border-2 border-neutral-100 bg-white p-4 shadow-sm sm:mt-5 sm:p-6 lg:p-10">
           <ActivityPrompt
+            key={`${activity.itemId}:${index}`}
+            fallbackText={activity.fallbackText}
+            fallbackLanguage={activity.fallbackLanguage}
             eyebrow="Scheduled practice"
             instruction={activity.instruction}
             focusText={activity.focusText}
@@ -220,6 +223,7 @@ export const PracticeSession = ({
                   key={`${option.id}-${optionIndex}`}
                   disabled={!!result || pending}
                   onClick={() => setSelectedId(option.id)}
+                  aria-pressed={selected}
                   className={cn(
                     "flex min-h-16 items-center justify-between rounded-2xl border-2 border-b-4 p-3 text-left text-sm font-bold text-neutral-700 transition hover:bg-neutral-50 active:border-b-2 sm:min-h-20 sm:p-4 sm:text-base",
                     selected && "border-sky-400 bg-sky-50 text-sky-700",
@@ -236,7 +240,11 @@ export const PracticeSession = ({
                       "border-emerald-500 bg-emerald-50 text-emerald-700"
                   )}
                 >
-                  <span lang="dgr">{option.text}</span>
+                  <span
+                    lang={activity.answerLanguage === "Tłı̨chǫ" ? "dgr" : "en"}
+                  >
+                    {option.text}
+                  </span>
                   <span className="ml-3 rounded-lg border-2 px-2 py-1 text-xs text-neutral-400">
                     {optionIndex + 1}
                   </span>

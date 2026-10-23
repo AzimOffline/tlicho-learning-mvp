@@ -1,10 +1,15 @@
-import type { vocabularyItems } from "@/db/schema";
+import { shuffleChoices } from "@/lib/answer-choices";
 import {
   getActivityCompanion,
   type ActivityCompanion,
 } from "@/lib/activity-companions";
 
-type VocabularyItem = typeof vocabularyItems.$inferSelect;
+type VocabularyItem = {
+  id: string;
+  tlicho: string;
+  english: string;
+  audioSrc: string | null;
+};
 
 export type PracticeOption = {
   id: string;
@@ -21,6 +26,9 @@ export type PracticeActivity = {
   promptAudioSrc: string | null;
   revealAudioAfterAnswer: boolean;
   translationAfterAnswer: string | null;
+  answerLanguage: "Tłı̨chǫ" | "English";
+  fallbackText: string;
+  fallbackLanguage: "Tłı̨chǫ" | "English";
   options: PracticeOption[];
 };
 
@@ -28,7 +36,7 @@ const selectChoices = (
   item: VocabularyItem,
   allItems: VocabularyItem[],
   field: "tlicho" | "english",
-  offset: number
+  random: () => number
 ) => {
   const choices = [item];
   const seen = new Set([item[field]]);
@@ -45,15 +53,14 @@ const selectChoices = (
     }
   }
 
-  const correct = choices.shift();
-  if (correct) choices.splice(offset % (choices.length + 1), 0, correct);
-  return choices;
+  return shuffleChoices(choices, random);
 };
 
 export const buildPracticeActivity = (
   item: VocabularyItem,
   allItems: VocabularyItem[],
-  sequence: number
+  sequence: number,
+  random = Math.random
 ): PracticeActivity => {
   const requestedMode = sequence % 4;
   const mode = item.audioSrc ? requestedMode : requestedMode % 2;
@@ -62,7 +69,7 @@ export const buildPracticeActivity = (
     item,
     allItems,
     answerInEnglish ? "english" : "tlicho",
-    sequence
+    random
   );
 
   const instruction =
@@ -80,6 +87,9 @@ export const buildPracticeActivity = (
 
   return {
     itemId: item.id,
+    answerLanguage: answerInEnglish ? "English" : "Tłı̨chǫ",
+    fallbackText: answerInEnglish ? item.tlicho : item.english,
+    fallbackLanguage: answerInEnglish ? "Tłı̨chǫ" : "English",
     instruction,
     focusText,
     focusLanguage,

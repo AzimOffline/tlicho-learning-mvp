@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 import { getLesson, getUserProgress, getUserSubscription } from "@/db/queries";
+import { shuffleChoices } from "@/lib/answer-choices";
 
 import { Quiz } from "./quiz";
 
@@ -30,7 +31,10 @@ const LessonPage = async () => {
   return (
     <Quiz
       initialLessonId={lesson.id}
-      initialLessonChallenges={lesson.challenges}
+      initialLessonChallenges={lesson.challenges.map((challenge) => ({
+        ...challenge,
+        challengeOptions: shuffleChoices(challenge.challengeOptions),
+      }))}
       initialHearts={userProgress.hearts}
       initialPercentage={initialPercentage}
       userSubscription={userSubscription}

@@ -3,6 +3,8 @@ import { Dumbbell, Heart } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { ContinueLearning } from "@/components/continue-learning";
+import { Button } from "@/components/ui/button";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { Quests } from "@/components/quests";
 import { StickyWrapper } from "@/components/sticky-wrapper";
@@ -60,6 +62,35 @@ const LearnPage = async () => {
       </StickyWrapper>
       <FeedWrapper>
         <Header title={userProgress.activeCourse.title} />
+        <ContinueLearning
+          title={
+            courseProgress.activeLesson?.title ?? "You’ve completed the trail!"
+          }
+          detail={
+            userProgress.hearts === 0 && !isPro
+              ? "Restore your hearts in Practice, then return to your lesson."
+              : courseProgress.activeLesson
+                ? "Pick up your next lesson and keep building your vocabulary."
+                : "Keep your words fresh with a review session."
+          }
+        >
+          <Button variant="primary" size="lg" asChild>
+            <Link
+              href={
+                (userProgress.hearts === 0 && !isPro) ||
+                !courseProgress.activeLesson
+                  ? "/practice"
+                  : `/lesson/${courseProgress.activeLesson.id}`
+              }
+            >
+              {userProgress.hearts === 0 && !isPro
+                ? "Practice to refill"
+                : courseProgress.activeLesson
+                  ? "Continue learning"
+                  : "Go to Practice"}
+            </Link>
+          </Button>
+        </ContinueLearning>
         {userProgress.hearts === 0 && !isPro && (
           <div className="mb-8 flex flex-col gap-4 rounded-3xl border-2 border-rose-100 bg-rose-50 p-5 text-rose-900 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-3">
@@ -81,7 +112,10 @@ const LearnPage = async () => {
           </div>
         )}
         {units.map((unit) => (
-          <div key={unit.id} className="mb-10">
+          <div
+            key={`${unit.id}:${courseProgress.activeLesson?.id}`}
+            className="mb-3"
+          >
             <Unit
               id={unit.id}
               order={unit.order}

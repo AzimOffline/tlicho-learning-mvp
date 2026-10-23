@@ -5,6 +5,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { getUserProgress } from "@/db/queries";
+import { AboutSupportCard } from "@/components/about-support-card";
 
 const ProfilePage = async () => {
   await auth.protect();
@@ -49,6 +50,7 @@ const ProfilePage = async () => {
           </div>
         </div>
 
+        <AboutSupportCard />
         <p className="mt-6 rounded-2xl bg-neutral-50 p-5 text-sm leading-6 text-neutral-600">
           Your account details and sign-out controls are available here and from
           the desktop sidebar.
