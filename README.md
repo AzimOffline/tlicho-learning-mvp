@@ -19,6 +19,8 @@ If another program is using port 3000, Next.js prints a different URL such as `h
 
 The **Words** tab provides a searchable library of the existing 100 records, including examples, categories, source links, and pronunciation. It is also available at `/words` on the website and from the authenticated navigation. This is a learning collection, not a complete dictionary; existing content/audio permission requirements still apply.
 
+The Learn screen starts with **Continue learning**, which opens the saved or next lesson (or Practice when hearts need recovery). The current unit is expanded by default; unit headers toggle the other lesson paths. Words use compact rows with separate pronunciation controls; expand a row for examples and source details. Search and category filters remain visible while scrolling.
+
 Demo lessons save their current question and checked answer, so refresh and heart recovery can resume without awarding the same answer twice. A lesson whose word order has changed starts fresh rather than resuming against different content. Browser storage failures display a persistent warning with **Retry saving**; progress is still not synced between devices.
 
 Listening activities offer **Use text instead**, and switch to a text alternative when playback fails or stalls. Failed recordings can be retried. Answer choices are shuffled independently of exercise type and retain their order during an attempt.

@@ -12,6 +12,7 @@ type AudioButtonProps = {
   label?: string;
   className?: string;
   onUnavailable?: () => void;
+  compact?: boolean;
 };
 
 export const AudioButton = (props: AudioButtonProps) => (
@@ -23,6 +24,7 @@ const AudioPlayer = ({
   label = "Play pronunciation",
   className,
   onUnavailable,
+  compact = false,
 }: AudioButtonProps) => {
   const audio = useRef<HTMLAudioElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -78,9 +80,20 @@ const AudioPlayer = ({
         size="lg"
         className={cn(
           "h-auto min-h-14 max-w-full justify-start gap-3 whitespace-normal border-2 border-b-4 border-sky-200 bg-sky-50 px-4 py-2 text-base shadow-sm hover:border-sky-300 hover:bg-sky-100 active:border-b-2",
-          className
+          className,
+          compact && "h-11 min-h-11 w-11 shrink-0 justify-center rounded-xl p-0"
         )}
         disabled={!src || loading}
+        aria-busy={loading}
+        title={
+          compact
+            ? !src
+              ? "Audio unavailable"
+              : failed
+                ? "Retry pronunciation"
+                : label
+            : undefined
+        }
         onClick={() => void play()}
         aria-label={
           !src
@@ -97,7 +110,7 @@ const AudioPlayer = ({
             <Volume2 className="h-5 w-5" />
           )}
         </span>
-        <span>
+        <span className={compact ? "sr-only" : undefined}>
           {!src
             ? "Audio unavailable"
             : loading

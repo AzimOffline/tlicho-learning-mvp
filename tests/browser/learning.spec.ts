@@ -85,11 +85,74 @@ test("refresh preserves a checked answer, order, and XP; recovery resumes the sa
     await page.getByRole("button", { name: "Continue", exact: true }).click();
   }
   await page.getByRole("button", { name: "Learn", exact: true }).last().click();
-  await page.getByRole("button", { name: /Resume lesson/ }).click();
+  await page
+    .getByRole("button", { name: "Continue learning", exact: true })
+    .click();
   expect((await saved(page)).lessonSession.index).toBe(1);
   await expect(
     page.getByRole("button", { name: "Try again", exact: true })
   ).toBeVisible();
+});
+
+test("continue card opens the next lesson even with units collapsed", async ({
+  page,
+}) => {
+  await page.goto("/demo");
+  const current = page.getByRole("button", {
+    name: /Current unit.*People & Family/,
+  });
+  const upcoming = page.getByRole("button", {
+    name: /Upcoming unit.*Home & Daily Life/,
+  });
+  await expect(current).toHaveAttribute("aria-expanded", "true");
+  await expect(upcoming).toHaveAttribute("aria-expanded", "false");
+  await current.click();
+  await expect(current).toHaveAttribute("aria-expanded", "false");
+  await upcoming.focus();
+  await page.keyboard.press("Enter");
+  await expect(upcoming).toHaveAttribute("aria-expanded", "true");
+  await page
+    .getByRole("button", { name: "Continue learning", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Check answer", exact: true })
+  ).toBeVisible();
+});
+
+test("compact words expand with the keyboard and keep audio separate", async ({
+  page,
+}) => {
+  await page.goto("/words");
+  const row = page
+    .locator("li")
+    .filter({
+      has: page.getByRole("heading", {
+        name: vocabulary[0].tlicho,
+        exact: true,
+      }),
+    });
+  const details = row.locator("details");
+  await expect(details).not.toHaveAttribute("open");
+  await expect(
+    row.getByRole("button", {
+      name: `Hear ${vocabulary[0].tlicho}`,
+      exact: true,
+    })
+  ).toBeVisible();
+  await row.locator("summary").focus();
+  await page.keyboard.press("Enter");
+  await expect(details).toHaveAttribute("open", "");
+  await expect(
+    row.getByRole("link", { name: /Dictionary source/ })
+  ).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(details).not.toHaveAttribute("open");
+  await page.screenshot({ path: "test-results/words-mobile.png" });
+  await page.goto("/demo");
+  await expect(
+    page.getByRole("button", { name: "Continue learning", exact: true })
+  ).toBeVisible();
+  await page.screenshot({ path: "test-results/learn-mobile.png" });
 });
 
 test("failed audio offers text, retry, and a fresh player on the next question", async ({

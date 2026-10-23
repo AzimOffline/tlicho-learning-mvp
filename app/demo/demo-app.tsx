@@ -26,6 +26,8 @@ import Link from "next/link";
 import { useAudio } from "react-use";
 import { toast } from "sonner";
 
+import { ContinueLearning } from "@/components/continue-learning";
+import { CollapsibleUnit } from "@/components/collapsible-unit";
 import { WordLibrary } from "@/components/word-library";
 import { seededRandom } from "@/lib/answer-choices";
 import {
@@ -316,10 +318,10 @@ const LessonPath = ({
 }) => {
   const style = unitStyles[unitIndex % unitStyles.length];
   const rowHeight = 150;
-  const pathHeight = unit.lessons.length * rowHeight + 78;
+  const pathHeight = unit.lessons.length * rowHeight + 110;
   const points = unit.lessons.map((_, index) => ({
     x: pathOffsets[index % pathOffsets.length],
-    y: 62 + index * rowHeight,
+    y: 94 + index * rowHeight,
   }));
   const path = points
     .map((point, index) => {
@@ -334,30 +336,14 @@ const LessonPath = ({
   ).length;
 
   return (
-    <section className="overflow-hidden rounded-[1.75rem] border border-sky-100 bg-white/90 shadow-[0_18px_45px_-34px_rgba(8,47,73,0.55)]">
-      <div
-        className={cn(
-          "flex items-center justify-between bg-gradient-to-r p-5 text-white sm:p-6",
-          style.banner
-        )}
-      >
-        <div>
-          <p className="text-sm font-extrabold uppercase tracking-wider text-white/80">
-            Unit {unitIndex + 1}
-          </p>
-          <h2 className="mt-1 text-2xl font-extrabold">{unit.title}</h2>
-          <p className="mt-1 text-sm font-semibold text-white/85">
-            {unit.description}
-          </p>
-        </div>
-        <div className="rounded-2xl bg-white/20 px-3 py-2 text-center backdrop-blur-sm">
-          <strong className="block text-xl">{completedCount}</strong>
-          <span className="text-xs font-bold uppercase">
-            of {unit.lessons.length}
-          </span>
-        </div>
-      </div>
-
+    <CollapsibleUnit
+      title={unit.title}
+      description={unit.description}
+      number={unitIndex + 1}
+      completed={completedCount}
+      total={unit.lessons.length}
+      current={unit.lessons.some((lesson) => lesson.id === currentLessonId)}
+    >
       <div
         className="relative mx-auto w-full max-w-xl"
         style={{ height: pathHeight }}
@@ -454,7 +440,7 @@ const LessonPath = ({
           );
         })}
       </div>
-    </section>
+    </CollapsibleUnit>
   );
 };
 
@@ -855,6 +841,17 @@ export const DemoApp = ({
     !!practiceActivity &&
     !!practiceCard;
   const focusedSession = lessonInProgress || practiceInProgress;
+  const nextLesson = units
+    .flatMap((unit) => unit.lessons)
+    .find(
+      (lesson) =>
+        lesson.id === (state.lessonSession?.lessonId ?? currentLessonId)
+    );
+  const remaining = nextLesson
+    ? nextLesson.items.length -
+      (state.lessonSession?.index ?? 0) -
+      (state.lessonSession?.result === "correct" ? 1 : 0)
+    : 0;
 
   return (
     <div
@@ -964,20 +961,6 @@ export const DemoApp = ({
               Retry saving
             </Button>
           </div>
-        )}
-        {tab === "learn" && !activeLesson && state.lessonSession && (
-          <Button
-            className="mb-4 w-full"
-            disabled={state.hearts === 0}
-            onClick={() => {
-              const lesson = units
-                .flatMap((unit) => unit.lessons)
-                .find((lesson) => lesson.id === state.lessonSession?.lessonId);
-              if (lesson) beginLesson(lesson);
-            }}
-          >
-            Resume lesson · question {state.lessonSession.index + 1}
-          </Button>
         )}
         {tab === "learn" && activeLesson && state.hearts === 0 ? (
           <section className="mx-auto flex min-h-[calc(100svh-2rem)] max-w-xl items-center justify-center sm:min-h-[calc(100svh-4rem)]">
@@ -1101,6 +1084,48 @@ export const DemoApp = ({
           </section>
         ) : tab === "learn" ? (
           <section className="mx-auto max-w-3xl">
+            <ContinueLearning
+              title={
+                state.hearts === 0
+                  ? "Ready for a little practice?"
+                  : (nextLesson?.title ?? "You’ve completed the trail!")
+              }
+              detail={
+                state.hearts === 0
+                  ? "Restore your hearts, then pick up your lesson where you left off."
+                  : nextLesson
+                    ? state.lessonSession
+                      ? "Your place is saved. Continue from question " +
+                        (state.lessonSession.index + 1) +
+                        " of " +
+                        nextLesson.items.length +
+                        "."
+                      : nextLesson.items.length +
+                        " short activities · build your vocabulary one word at a time."
+                    : "Keep your words fresh with a review session."
+              }
+              minutes={
+                nextLesson && state.hearts > 0
+                  ? Math.max(1, Math.ceil(remaining * 0.5))
+                  : undefined
+              }
+            >
+              <Button
+                size="lg"
+                variant="primary"
+                onClick={() =>
+                  state.hearts === 0 || !nextLesson
+                    ? openTab("practice")
+                    : beginLesson(nextLesson)
+                }
+              >
+                {state.hearts === 0
+                  ? "Practice to refill"
+                  : nextLesson
+                    ? "Continue learning"
+                    : "Go to Practice"}
+              </Button>
+            </ContinueLearning>
             <div className="relative min-h-56 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#07559a] via-[#087cae] to-[#1aa6a6] p-7 pr-28 text-white shadow-[0_24px_60px_-38px_rgba(3,105,161,0.9)] sm:min-h-64 sm:p-9 sm:pr-52">
               <div className="absolute -bottom-16 -right-12 h-52 w-52 rounded-full bg-white/10 sm:h-72 sm:w-72" />
               <p className="font-bold text-sky-100">Your learning trail</p>
@@ -1145,10 +1170,10 @@ export const DemoApp = ({
                 </Button>
               </div>
             )}
-            <div className="mt-8 space-y-10">
+            <div className="mt-6 space-y-3">
               {units.map((unit, unitIndex) => (
                 <LessonPath
-                  key={unit.title}
+                  key={`${unit.title}:${currentLessonId}`}
                   unit={unit}
                   unitIndex={unitIndex}
                   completedLessons={state.completedLessons}
@@ -1303,7 +1328,10 @@ export const DemoApp = ({
             </div>
           </section>
         ) : tab === "words" ? (
-          <WordLibrary vocabulary={vocabulary} />
+          <WordLibrary
+            vocabulary={vocabulary}
+            stickyOffset="top-16 sm:top-20"
+          />
         ) : tab === "progress" ? (
           <section>
             <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-sky-600">
