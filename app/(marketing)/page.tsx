@@ -20,6 +20,16 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { isDemoMode } from "@/lib/demo-mode";
 
+import { pageMetadata, siteUrl, siteName } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
+import { vocabulary } from "@/lib/vocabulary";
+
+export const metadata = pageMetadata(
+  "Learn Tlicho (Tłı̨chǫ) — Words, Meanings & Practice",
+  "Learn Tlicho (Tłı̨chǫ) with free vocabulary lessons. Browse Tlicho words, English meanings, examples, and available pronunciation audio.",
+  "/"
+);
+
 type Feature = {
   title: string;
   description: string;
@@ -89,6 +99,17 @@ export default function MarketingPage() {
         </svg>
       </div>
 
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": siteUrl + "/#website",
+          name: siteName,
+          alternateName: "Learn Tlicho",
+          url: siteUrl + "/",
+          inLanguage: "en-CA",
+        }}
+      />
       <section className="mx-auto grid w-full max-w-[1340px] items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 xl:gap-20">
         <div className="flex flex-col items-start py-2 lg:py-8">
           <div className="inline-flex items-center gap-2 rounded-full border-2 border-sky-200 bg-white/85 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sky-700 shadow-sm sm:text-sm">
@@ -104,8 +125,8 @@ export default function MarketingPage() {
           </h1>
 
           <p className="mt-7 max-w-xl text-lg font-medium leading-8 text-slate-600 sm:text-xl lg:text-[1.35rem]">
-            Short lessons, clear pronunciation, and practice that brings words
-            back at the right time.
+            Learn Tlicho (Tłı̨chǫ) words and their English meanings through short
+            lessons, available pronunciation recordings, and regular practice.
           </p>
 
           <div className="mt-8 w-full max-w-md">
@@ -230,6 +251,39 @@ export default function MarketingPage() {
             </article>
           );
         })}
+      </section>
+      <section
+        className="mx-auto mt-12 max-w-[1340px] rounded-3xl border border-sky-100 bg-white p-6 sm:p-8"
+        aria-labelledby="dictionary-heading"
+      >
+        <h2
+          id="dictionary-heading"
+          className="text-2xl font-extrabold text-sky-950"
+        >
+          Explore Tlicho words and meanings
+        </h2>
+        <p className="mt-3 max-w-3xl leading-7 text-slate-600">
+          Looking for a Tlicho dictionary? Our starter collection includes{" "}
+          {vocabulary.length} Tłı̨chǫ words with English meanings, category
+          filters, and examples or pronunciation recordings where available.
+          Search in Tłı̨chǫ or English without an account.
+        </p>
+        <p className="mt-3 max-w-3xl leading-7 text-slate-600">
+          This independent learning project is not a complete or
+          community-endorsed dictionary. Each entry links to its source when
+          available, and we welcome corrections and community review.
+        </p>
+        <nav
+          aria-label="Explore the project"
+          className="mt-4 flex flex-wrap gap-5 font-bold text-sky-800 underline underline-offset-4"
+        >
+          <Link href="/words" className="py-3">
+            Browse the Tlicho word collection
+          </Link>
+          <Link href="/about" className="py-3">
+            About the project and contact
+          </Link>
+        </nav>
       </section>
     </div>
   );

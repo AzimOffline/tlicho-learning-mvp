@@ -1,3 +1,5 @@
+export const metadata = { robots: { index: false, follow: true } };
+
 import type { PropsWithChildren } from "react";
 
 import { MobileHeader } from "@/components/mobile-header";

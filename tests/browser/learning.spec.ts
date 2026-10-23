@@ -229,7 +229,7 @@ test("word library is accessible without lessons and supports search and empty s
   await expect(page.getByText(/No matching words/)).toBeVisible();
   await page.goto("/words");
   await expect(
-    page.getByRole("heading", { name: "Words", exact: true })
+    page.getByRole("heading", { name: "Tłı̨chǫ words & meanings", exact: true })
   ).toBeVisible();
   expect(
     await page.evaluate(

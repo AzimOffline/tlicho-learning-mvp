@@ -104,3 +104,9 @@ pnpm exec opennextjs-cloudflare deploy
 ```
 
 Or run `pnpm deploy` to build and deploy together after `pnpm exec wrangler login`. For Cloudflare Workers Builds, use `pnpm build:cloudflare` as the build command and `pnpm exec opennextjs-cloudflare deploy` as the deploy command. Set public environment variables before building; this deployment retains the free, browser-local demo when Clerk is not configured. Generated `.open-next` and `.wrangler` files are ignored.
+
+## Search visibility
+
+The homepage, `/words`, and `/about` use page-specific titles, descriptions, canonical URLs, and social previews. `/words` includes the existing vocabulary in the initial HTML and structured data; it is described as a starter collection, not a complete or official dictionary. `/dictionary` permanently redirects to `/words`. Learning/account screens use `noindex` so search results focus on public information.
+
+After deployment, verify `https://learntlicho.ca/` in Google Search Console (DNS verification or the optional `GOOGLE_SITE_VERIFICATION` HTML token), submit `https://learntlicho.ca/sitemap.xml`, and request indexing for `/` and `/words`. Check the robots file and rendered page with URL Inspection. Track impressions and clicks for Tlicho, Tłı̨chǫ, Tlicho dictionary, and Tlicho words. Indexing and rankings are decided by search engines and are not guaranteed. Add genuinely useful, reviewed language content over time rather than duplicate keyword pages.
