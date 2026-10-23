@@ -15,6 +15,14 @@ Open [http://localhost:3000](http://localhost:3000), then choose **Start local d
 
 If another program is using port 3000, Next.js prints a different URL such as `http://localhost:3001`; open the exact URL shown in the terminal. The terminal running `pnpm dev` must remain open.
 
+## Words and saved lessons
+
+The **Words** tab provides a searchable library of the existing 100 records, including examples, categories, source links, and pronunciation. It is also available at `/words` on the website and from the authenticated navigation. This is a learning collection, not a complete dictionary; existing content/audio permission requirements still apply.
+
+Demo lessons save their current question and checked answer, so refresh and heart recovery can resume without awarding the same answer twice. A lesson whose word order has changed starts fresh rather than resuming against different content. Browser storage failures display a persistent warning with **Retry saving**; progress is still not synced between devices.
+
+Listening activities offer **Use text instead**, and switch to a text alternative when playback fails or stalls. Failed recordings can be retried. Answer choices are shuffled independently of exercise type and retain their order during an attempt.
+
 ## Run the persisted multi-user app
 
 Clerk and PostgreSQL/Neon are optional for the local demo but required for authenticated, server-persisted flows.
@@ -60,6 +68,17 @@ pnpm lint
 pnpm typecheck
 pnpm build
 ```
+
+Browser regression tests cover lesson resume, heart recovery, audio failure, save warnings, and word search:
+
+```powershell
+pnpm exec playwright install chromium
+pnpm test:browser
+```
+
+Set `PLAYWRIGHT_CHANNEL=chrome` to use an installed Chrome instead. Tests start a local demo server on port 3107 and use isolated browser storage; no production account or database is required.
+
+For deployment, set `NEXT_PUBLIC_APP_URL=https://learntlicho.ca`. Production metadata defaults to this URL when the setting is missing, malformed, or points at localhost; development retains a localhost default.
 
 ## Known issues
 

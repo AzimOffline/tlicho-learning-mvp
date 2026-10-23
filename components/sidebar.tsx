@@ -1,7 +1,14 @@
 "use client";
 
 import { ClerkLoading, ClerkLoaded, UserButton } from "@clerk/nextjs";
-import { BarChart3, BookOpen, Dumbbell, Loader, UserRound } from "lucide-react";
+import {
+  BarChart3,
+  BookOpen,
+  Library,
+  Dumbbell,
+  Loader,
+  UserRound,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -34,6 +41,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
       <div className="flex flex-1 flex-col gap-y-2">
         <SidebarItem label="Learn" href="/learn" icon={BookOpen} />
         <SidebarItem label="Practice" href="/practice" icon={Dumbbell} />
+        <SidebarItem label="Words" href="/words" icon={Library} />
         <SidebarItem label="Progress" href="/progress" icon={BarChart3} />
         <SidebarItem label="Profile" href="/profile" icon={UserRound} />
       </div>

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
+import { getMetadataBase } from "@/lib/site-url";
 
 export const siteConfig: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL?.trim() || "http://localhost:3000"
-  ),
+  metadataBase: getMetadataBase(process.env.NEXT_PUBLIC_APP_URL),
   title: {
     default: "Tłı̨chǫ Learning",
     template: "%s | Tłı̨chǫ Learning",
