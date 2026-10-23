@@ -139,10 +139,9 @@ export const AboutSupport = ({
         </h2>
         <ul className="mt-4 list-disc space-y-3 pl-5 leading-7 text-slate-600">
           <li>Community-reviewed vocabulary, examples, and lessons.</li>
-          <li>
-            Compensated recordings from fluent speakers, with permission and
-            attribution.
-          </li>
+          <li>Account sign-in to keep learning progress across devices.</li>
+          <li>Cross-platform support for web, Android, and iOS.</li>
+          <li>A possible iOS app release on the Apple App Store.</li>
           <li>
             Educator feedback and learning materials shaped by classroom needs.
           </li>
